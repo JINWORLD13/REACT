@@ -7,17 +7,13 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import axios from 'axios';
 
-// 아직 사용안하는 import그룹
-import InputGroup from 'react-bootstrap/InputGroup';
-
 const RegisterForm = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [address, setAddress] = useState('');
-  // 유효성 검사 로직 보류
-  const [validated, setValidated] = useState(false);
+
   const navigate = useNavigate();
 
   // post로 데이터 등록
@@ -61,7 +57,7 @@ const RegisterForm = () => {
 
   return (
     <Register>
-    <Form noValidate validated={validated} style = {{ width : 600 }}>
+    <form style = {{ width : 600 }}>
       {/* 아이디 */}
       <Row className="mb-3" >
         <Form.Group as={Col} md="12" controlId="validationCustom02">
@@ -159,7 +155,7 @@ const RegisterForm = () => {
             border : 'grey',
           }} onClick = { handleSubmit }>회원가입</Button>
       </div>
-    </Form>
+    </form>
     </Register>
   );
 };
