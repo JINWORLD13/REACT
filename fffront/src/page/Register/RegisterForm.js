@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import axios from 'axios';
 
 const RegisterForm = () => {
@@ -56,107 +52,36 @@ const RegisterForm = () => {
   // 값이 적절하지 않은 경우 빨간 테두리 (Form.Control.Feedback)
 
   return (
-    <Register>
-    <form style = {{ width : 600 }}>
-      {/* 아이디 */}
-      <Row className="mb-3" >
-        <Form.Group as={Col} md="12" controlId="validationCustom02">
-          <Form.Label>아이디</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Elice@elice.com"
-            defaultValue=""
-            value= { email }
-            onChange={ (e) => setEmail(e.target.value)}
-            />
-          <Form.Control.Feedback></Form.Control.Feedback>
-        </Form.Group> 
-      </Row>
-      
-        {/* 이름 */}
-        <Row className="mb-3">
-        <Form.Group as={Col} controlId="validationCustom02">
-          <Form.Label>이름</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="홍길동"
-            defaultValue=""
-            value={ name }
-            onChange={ (e) => setName(e.target.value)}
-          />
-          <Form.Control.Feedback></Form.Control.Feedback>
-        </Form.Group>
-        {/* 비밀번호 */}
-        </Row>
-        <Row className="mb-3">
-        <Form.Group as={Col} controlId="validationCustom02">
-          <Form.Label>비밀번호</Form.Label>
-          <Form.Control
-            required
-            type="password"
-            // type을 password로 해주어야 안보이게 타이핑 가능
-            placeholder="*****"
-            defaultValue=""
-            value={ password }
-            onChange={ (e) => setPassword(e.target.value)}
-          />
-          <Form.Control.Feedback></Form.Control.Feedback>
-        </Form.Group>
-        {/* <Form.Group as={Col} controlId="validationCustom02">
-          <Form.Label>비밀번호 확인</Form.Label>
-          <Form.Control
-            required
-            type="password"
-            placeholder="*****"
-            defaultValue=""
-            // onChange로 앞에 적은 password와 같은지 확인해야 함
-          />
-          <Form.Control.Feedback>비밀번호가 일치합니다.</Form.Control.Feedback>
-        </Form.Group> */}
-        </Row>
-        {/* 전화번호 */}
-        <Row className="mb-3">
-        <Form.Group as={Col} controlId="validationCustom02">
-          <Form.Label>전화번호</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="010-1234-5678"
-            defaultValue=""
-            value={ phoneNumber }
-            onChange={ (e) => setPhoneNumber(e.target.value)}
-          />
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-        </Form.Group>
-        </Row>
-        {/* 주소 */}
-        <Row className="mb-3">
-        <Form.Group as={Col} controlId="validationCustom02">
-          <Form.Label>주소</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="서울특별시 광진구 화양동 123-456 1동 2호"
-            defaultValue=""
-            value={ address }
-            onChange={ (e) => setAddress(e.target.value)}
-          />
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-        </Form.Group>
-        </Row>
-        <div style={{
-          display : 'flex',
-          justifyContent : 'flex-end'
-        }}>
-          <Button type="submit" style = {{
-            backgroundColor : 'grey',
-            border : 'grey',
-          }} onClick = { handleSubmit }>회원가입</Button>
-      </div>
-    </form>
-    </Register>
+          <div>
+            <Ul>
+                <Div><A href="/">Logo</A></Div>
+                <Li><A href="/happiness">행복지수</A></Li>
+                <Li><A href="/environment">문화 환경 만족도</A></Li>
+                <Li><A href="/detail">등 등...</A></Li>
+                <Li><A href="/login">로그인</A></Li>
+                <Li><A href="/join">회원가입</A></Li>
+            </Ul>
+            
+            <Hr/>
+            <Register>
+              <H2>Far-Away Home</H2>
+              <div>
+                  <Label1 htmlFor='input_id'>아이디</Label1>
+                  <Input1 type='text' name='input_email' value={email} onChange={e => setEmail(e.target.email)}/>
+              </div>
+              <div>
+                  <Label2 htmlFor='input_pw'>비밀번호</Label2>
+                  <Input2 type='text' name='input_pw' value={password} onChange={e => setPassword(e.target.password)}/>
+              </div>
+              <div>
+                  <Label3 htmlFor='pw_check'>비밀번호 확인</Label3>
+                  <Input3 type='text' name='input_pw' value={password} onChange={e => setPassword(e.target.password)}/>
+              </div>
+              <div>
+                  <Button2 type='button' onClick={handleSubmit}>회 원 가 입</Button2>
+              </div>
+            </Register>
+          </div>
   );
 };
 
@@ -164,6 +89,162 @@ const Register = styled.div`
     display : flex;
     justify-content : space-around;
     padding : 150px;
+`
+const Div = styled.div`
+    box-sizing: border-box;
+    width: 130px;
+    height: 100px;
+    left: 20px;
+    top: 31px;
+
+    border: 1px solid #000000
+`
+const Ul = styled.ul`
+    background-color: white;
+    width : 100%;
+    color: white;
+    display: flex;
+    padding 40px;
+    list-style-type: none;
+    text-align: center;
+    align-items: center;
+    font-size: 2em;
+`
+const Li = styled.li`
+    margin-left: 30px;
+`
+
+const A = styled.a`
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+`
+
+const Hr = styled.hr`
+    position: absolute;
+    width: 100%;
+    height: 0px;
+    left: 0px;
+    top: 157px;
+
+    border: 5px solid #000000;
+`
+
+const H2 = styled.h2`
+    position: absolute;
+    width: 440px;
+    height: 75px;
+    left: 500px;
+    top: 274px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 45px;
+    line-height: 54px;
+    text-align: center;
+
+    color: #000000;
+`
+const Label1 = styled.label`
+    position: absolute;
+    width: 60px;
+    height: 23px;
+    left: 370px;
+    top: 367px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400px;
+    font-size: 20px;
+    line-height: 24px;
+
+    color: #000000;
+`
+const Label2 = styled.label`
+    position: absolute;
+    width: 80px;
+    height: 23px;
+    left: 370px;
+    top: 489px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400px;
+    font-size: 20px;
+    line-height: 24px;
+
+    color: #000000;
+`
+const Label3 = styled.label`
+    position: absolute;
+    width: 130px;
+    height: 23px;
+    left: 370px;
+    top: 620px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400px;
+    font-size: 20px;
+    line-height: 24px;
+
+    color: #000000;
+`
+const Input1 = styled.input`
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 700px;
+    height: 80px;
+    left: 370px;
+    top: 390px;
+
+    background: #FFFFFF;
+    border: 1px solid #000000;
+`
+const Input2 = styled.input`
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 700px;
+    height: 80px;
+    left: 370px;
+    top: 512px;
+
+    background: #FFFFFF;
+    border: 1px solid #000000;
+`
+const Input3 = styled.input`
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 700px;
+    height: 80px;
+    left: 370px;
+    margin-top: 12%;
+
+    background: #FFFFFF;
+    border: 1px solid #000000;
+`
+const Button2 = styled.button`
+    position: absolute;
+    width : 560px;
+    height : 70px;
+    Left : 440px;
+    top : 780px;
+    background : rgba(44, 65, 251, 0.73);
+    border-radius : 30px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 30px;
+    text-align: center;
+
+    color: #FFFFFF;
 `
 
 export default RegisterForm;
