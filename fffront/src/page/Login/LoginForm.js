@@ -49,11 +49,11 @@ function LoginForm() {
               <H2>Far-Away Home</H2>
               <div>
                   <Label1 htmlFor='input_id'>아이디</Label1>
-                  <Input1 type='text' name='input_id' value={inputId} onChange={handleInputId}/>
+                  <Input1 type='text' name='input_id' value={inputId} onChange={handleInputId} placeholder="아이디를 입력해주세요."/>
               </div>
               <div>
                   <Label2 htmlFor='input_pw'>비밀번호</Label2>
-                  <Input2 type='text' name='input_pw' value={inputPw} onChange={handleInputPw}/>
+                  <Input2 type='text' name='input_pw' value={inputPw} onChange={handleInputPw} placeholder="비밀번호를 입력해주세요."/>
               </div>
               <div>
                   <Button1 type='button' onClick={onClickLogin}>로 그 인</Button1>

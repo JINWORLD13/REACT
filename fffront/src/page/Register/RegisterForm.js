@@ -67,15 +67,15 @@ const RegisterForm = () => {
               <H2>Far-Away Home</H2>
               <div>
                   <Label1 htmlFor='input_id'>아이디</Label1>
-                  <Input1 type='text' name='input_email' value={email} onChange={e => setEmail(e.target.email)}/>
+                  <Input1 type='text' name='input_email' value={email} onChange={e => setEmail(e.target.email)} placeholder="아이디를 입력해주세요."/>
               </div>
               <div>
                   <Label2 htmlFor='input_pw'>비밀번호</Label2>
-                  <Input2 type='text' name='input_pw' value={password} onChange={e => setPassword(e.target.password)}/>
+                  <Input2 type='text' name='input_pw' value={password} onChange={e => setPassword(e.target.password)} placeholder="비밀번호를 입력해주세요."/>
               </div>
               <div>
                   <Label3 htmlFor='pw_check'>비밀번호 확인</Label3>
-                  <Input3 type='text' name='input_pw' value={password} onChange={e => setPassword(e.target.password)}/>
+                  <Input3 type='text' name='input_pw' value={password} onChange={e => setPassword(e.target.password)} placeholder="비밀번호를 다시 입력해주세요."/>
               </div>
               <div>
                   <Button2 type='button' onClick={handleSubmit}>회 원 가 입</Button2>
