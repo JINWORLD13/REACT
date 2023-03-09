@@ -32,9 +32,15 @@ function LoginForm() {
     // 페이지 호출 후 처음 한번만 호출될 수 있도록 [] 추가
     [])
 
+    const style = {
+      border: '1px solid red',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    };
+
     return(
-        <>
-            
+        <div>
             <Ul>
                 <Div><A href="/">Logo</A></Div>
                 <Li><A href="/happiness">행복지수</A></Li>
@@ -45,26 +51,33 @@ function LoginForm() {
             </Ul>
             
             <Hr/>
-            <Login>
+            <div>
               <H2>Far-Away Home</H2>
-              <div>
+              <Wrapper>
                   <Label1 htmlFor='input_id'>아이디</Label1>
                   <Input1 type='text' name='input_id' value={inputId} onChange={handleInputId} placeholder="아이디를 입력해주세요."/>
-              </div>
-              <div>
+              </Wrapper>
+              <Wrapper>
                   <Label2 htmlFor='input_pw'>비밀번호</Label2>
                   <Input2 type='text' name='input_pw' value={inputPw} onChange={handleInputPw} placeholder="비밀번호를 입력해주세요."/>
-              </div>
-              <div>
+              </Wrapper>
+              <Wrapper>
                   <Button1 type='button' onClick={onClickLogin}>로 그 인</Button1>
-              </div>
-              <div>
+              </Wrapper>
+              <Wrapper>
                   <Button2 type='button' onClick={()=>navigate('/join')}>회 원 가 입</Button2>
-              </div>
-            </Login>
-        </>
+              </Wrapper>
+            </div>
+        </div>
     )
 }
+const Wrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    border: '1px solid red';
+`
 const Div = styled.div`
     box-sizing: border-box;
     width: 130px;
@@ -107,16 +120,9 @@ const Hr = styled.hr`
     border: 5px solid #000000;
 `
 
-const Login = styled.div`
-    padding : 300px;
-    width : 60%;
-`
 const H2 = styled.h2`
-    position: absolute;
-    width: 440px;
-    height: 75px;
-    left: 500px;
-    top: 274px;
+    text-align: center;
+    line-height: 100vh;
 
     font-family: 'Inter';
     font-style: normal;
