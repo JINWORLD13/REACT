@@ -41,185 +41,230 @@ function LoginForm() {
 
     return(
         <div>
-            <Ul>
-                <Div><A href="/">Logo</A></Div>
-                <Li><A href="/happiness">행복지수</A></Li>
-                <Li><A href="/environment">문화 환경 만족도</A></Li>
-                <Li><A href="/detail">등 등...</A></Li>
-                <Li><A href="/login">로그인</A></Li>
-                <Li><A href="/join">회원가입</A></Li>
-            </Ul>
+            <Nav>
+              <Ul1>
+              <LogoDiv>
+                <Link href="/">Logo</Link>
+              </LogoDiv>
+              </Ul1>
+              <Ul2>
+                  <Li><Link href="/happiness">행복지수</Link></Li>
+                  <Li><Link href="/environment">문화 환경 만족도</Link></Li>
+                  <Li><Link href="/price">가격 비교</Link></Li>
+                  <Li><Link href="/detail">아무개</Link></Li>
+              </Ul2>
+              <Ul3>
+                  <Li><Link href="/mypage">마이페이지</Link></Li>
+                  <Li><Link href="/login">로그인</Link></Li>
+                  <Li><Link href="/join">회원가입</Link></Li>
+              </Ul3>
+            </Nav>
             
-            <Hr/>
-            <div>
+            <Wrapper>
               <H2>Far-Away Home</H2>
-              <Wrapper>
-                  <Label1 htmlFor='input_id'>아이디</Label1>
-                  <Input1 type='text' name='input_id' value={inputId} onChange={handleInputId} placeholder="아이디를 입력해주세요."/>
-              </Wrapper>
-              <Wrapper>
-                  <Label2 htmlFor='input_pw'>비밀번호</Label2>
-                  <Input2 type='text' name='input_pw' value={inputPw} onChange={handleInputPw} placeholder="비밀번호를 입력해주세요."/>
-              </Wrapper>
-              <Wrapper>
-                  <Button1 type='button' onClick={onClickLogin}>로 그 인</Button1>
-              </Wrapper>
-              <Wrapper>
-                  <Button2 type='button' onClick={()=>navigate('/join')}>회 원 가 입</Button2>
-              </Wrapper>
-            </div>
+              <Label1 htmlFor='input_id'>아이디</Label1>
+              <Input1 type='text' name='input_id' value={inputId} style={{ fontSize: "25px" }} onChange={handleInputId} placeholder="아이디를 입력해주세요."/>
+              <Label2 htmlFor='input_pw'>비밀번호</Label2>
+              <Input2 type='text' name='input_pw' value={inputPw} style={{ fontSize: "25px" }} onChange={handleInputPw} placeholder="비밀번호를 입력해주세요."/>
+              <Button1 type='button' onClick={onClickLogin}>로 그 인</Button1>
+              <Button2 type='button' onClick={()=>navigate('/join')}>회 원 가 입</Button2>
+            </Wrapper>
         </div>
     )
 }
-const Wrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    border: '1px solid red';
-`
-const Div = styled.div`
-    box-sizing: border-box;
-    width: 130px;
-    height: 100px;
-    left: 20px;
-    top: 31px;
 
-    border: 1px solid #000000
-`
-const Ul = styled.ul`
-    background-color: white;
-    width : 100%;
-    color: white;
-    display: flex;
-    padding 40px;
-    list-style-type: none;
-    text-align: center;
-    align-items: center;
-    font-size: 2em;
-`
+const Nav = styled.nav`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  height: 10%;
+  background-color: white;
+  border: 5px solid black;
+  margin-bottom: 100px;
+`;
+const Ul1 = styled.ul`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 40%;
+  height: 100px;
+  color: white;
+  list-style-type: none;
+  font-size: 2em;
+`;
+const Ul2 = styled.ul`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100px;
+  color: white;
+  list-style-type: none;
+  font-size: 2em;
+`;
+const Ul3 = styled.ul`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 50%;
+  color: white;
+  list-style-type: none;
+  font-size: 2em;
+`;
 const Li = styled.li`
-    margin-left: 30px;
-`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 30px;
+  margin-right: 30px;
+`;
+const Link = styled.a`
+  color: black;
+  padding: 14px 16px;
+  text-decoration: none;
+  text-align: center;
+  line-height: 1;
+`;
 
-const A = styled.a`
-    display: block;
-    color: black;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-`
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
-const Hr = styled.hr`
-    position: absolute;
-    width: 100%;
-    height: 0px;
-    left: 0px;
-    top: 157px;
+const LogoDiv = styled.div`
+  box-sizing: border-box;
+  text-align: left;
+  width: 130px;
+  height: 80px;
+  left: 20px;
+  top: 31px;
+  display: inline-block;
+  align-items: center;
+  vertical-align: middle;
+  text-align: center;
 
-    border: 5px solid #000000;
-`
+  border: 1px solid #000000;
+`;
 
 const H2 = styled.h2`
-    text-align: center;
-    line-height: 100vh;
+  text-align: center;
+  margin-bottom: 90px;
 
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 45px;
-    line-height: 54px;
-    text-align: center;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 60px;
+  line-height: 54px;
 
-    color: #000000;
-`
+  color: #000000;
+`;
 const Label1 = styled.label`
-    position: absolute;
-    width: 60px;
-    height: 23px;
-    left: 370px;
-    top: 367px;
+  width: 700px;
+  margin-bottom: 15px;
+  text-align: left;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 24px;
 
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
-
-    color: #000000;
-`
+  color: #000000;
+`;
 const Label2 = styled.label`
-    position: absolute;
-    width: 80px;
-    height: 23px;
-    left: 370px;
-    top: 489px;
+  width: 700px;
+  margin-bottom: 15px;
+  text-align: left;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 24px;
 
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
+  color: #000000;
+`;
+const Label3 = styled.label`
+  width: 700px;
+  margin-bottom: 15px;
+  text-align: left;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 24px;
 
-    color: #000000;
-`
+  color: #000000;
+`;
 const Input1 = styled.input`
-    box-sizing: border-box;
+  box-sizing: border-box;
+  margin-bottom: 40px;
+  width: 700px;
+  height: 80px;
 
-    position: absolute;
-    width: 700px;
-    height: 80px;
-    left: 370px;
-    top: 390px;
-
-    background: #FFFFFF;
-    border: 1px solid #000000;
-`
+  background: #ffffff;
+  border: 1px solid #000000;
+`;
 const Input2 = styled.input`
-    box-sizing: border-box;
+  box-sizing: border-box;
+  margin-bottom: 40px;
+  width: 700px;
+  height: 80px;
 
-    position: absolute;
-    width: 700px;
-    height: 80px;
-    left: 370px;
-    top: 512px;
+  background: #ffffff;
+  border: 1px solid #000000;
+`;
+const Input3 = styled.input`
+  box-sizing: border-box;
+  margin-bottom: 40px;
+  width: 700px;
+  height: 80px;
 
-    background: #FFFFFF;
-    border: 1px solid #000000;
-`
+  background: #ffffff;
+  border: 1px solid #000000;
+`;
 const Button1 = styled.button`
-    position: absolute;
-    width : 560px;
-    height : 70px;
-    left : 440px;
-    top : 636px;
-    background : rgba(44, 65, 251, 0.73);
-    border-radius : 30px;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 25px;
-    line-height: 30px;
-    text-align: center;
-    color: #FFFFFF;
-`
-const Button2 = styled.button`
-    position: absolute;
-    width : 560px;
-    height : 70px;
-    Left : 440px;
-    top : 733px;
-    background : rgba(44, 65, 251, 0.73);
-    border-radius : 30px;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 25px;
-    line-height: 30px;
-    text-align: center;
+  width: 560px;
+  height: 70px;
+  margin-top: 20px;
+  margin-bottom: 40px;
 
+  background: rgba(44, 65, 251, 0.73);
+  border-radius: 30px;
+  border-color: rgba(44, 65, 251, 0.73);
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 30px;
+  text-align: center;
+  color: #ffffff;
+`;
+
+const Button2 = styled.button`
+    width : 560px;
+    height : 70px;
+    margin-bottom: 30px;
+
+    background : rgba(44, 65, 251, 0.73);
+    border-radius : 30px;
+    border-color : rgba(44, 65, 251, 0.73);
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 30px;
+    text-align: center;
     color: #FFFFFF;
 `
+
 
 export default LoginForm
 
