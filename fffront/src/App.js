@@ -1,10 +1,10 @@
-import './App.css';
-import Happiness from './components/classify/Happiness';
+import Main from './page/Main/Main.js';
+import Home from './page/Home.js';
 
 function App() {
   return (
-    <div className="App">
-      <Happiness />
+    <div>
+      <Main />
     </div>
   );
 }
