@@ -10,12 +10,6 @@ function App() {
   return (
     <div>
       <Main />
-      <Routes>
-        <Route path="/login" element={<LoginForm/>} />
-        <Route path="/join" element={<RegisterForm/>} />
-        <Route path="/mypage" element={<UserForm/>} />
-      </Routes>
-      <Happiness />
     </div>
   );
 }
