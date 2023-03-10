@@ -103,13 +103,21 @@ const RegisterForm = () => {
           type="text"
           name="input_pw"
           value={inputPwForCheck}
-          style={{ fontSize: "25px" }}
+          style={{ fontSize: "25px", marginBottom: '0px' }}
           onChange={handleInputPwForCheck}
           placeholder="비밀번호를 재입력해주세요."
         />
-        {
-            inputPw === inputPwForCheck || inputPwForCheck.length === 0? null : <Label>비밀번호가 일치하지 않습니다.</Label>
-        }
+        <div style ={{height: '40px'}}>
+          {
+              <div style={inputPw === inputPwForCheck || inputPwForCheck.length === 0? {display:"none"}:{display:"block", width: '700px',
+              textAlign: 'left',
+              fontFamily: "Inter",
+              fontStyle: 'normal',
+              fontWeight: 400,
+              fontSize: '25px',
+              lineHeight: '24px', color:"red"}}>비밀번호가 일치하지 않습니다.</div>
+          }
+        </div>
         <Button1 type="button" onClick={handleSubmit}>
           회 원 가 입
         </Button1>

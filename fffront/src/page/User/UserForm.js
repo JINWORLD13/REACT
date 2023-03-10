@@ -5,17 +5,22 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const UserForm = () => {
-  const [inputId, setInputId] = useState("");
-  const [inputPw, setInputPw] = useState("");
-  const navigate = useNavigate();
+const [inputId, setInputId] = useState("");
+const [inputPw, setInputPw] = useState("");
+const [inputPwForCheck, setInputPwForCheck] = useState("");
+const navigate = useNavigate();
 
-  const handleInputId = (e) => {
+const handleInputId = (e) => {
     setInputId(e.target.value);
-  };
+};
 
-  const handleInputPw = (e) => {
+const handleInputPw = (e) => {
     setInputPw(e.target.value);
-  };
+};
+
+const handleInputPwForCheck = (e) => {
+    setInputPwForCheck(e.target.value);
+};
 
   // login 버튼 클릭 이벤트
   const onClickLogin = () => {
@@ -102,11 +107,22 @@ const UserForm = () => {
         <Input3
           type="text"
           name="input_pw"
-          value={inputPw}
-          style={{ fontSize: "25px" }}
-          onChange={handleInputPw}
+          value={inputPwForCheck}
+          style={{ fontSize: "25px", marginBottom: '0px' }}
+          onChange={handleInputPwForCheck}
           placeholder="비밀번호를 재입력해주세요."
         />
+        <div style ={{height: '40px'}}>
+          {
+              <div style={inputPw === inputPwForCheck || inputPwForCheck.length === 0? {display:"none"}:{display:"block", width: '700px',
+              textAlign: 'left',
+              fontFamily: "Inter",
+              fontStyle: 'normal',
+              fontWeight: 400,
+              fontSize: '25px',
+              lineHeight: '24px', color:"red"}}>비밀번호가 일치하지 않습니다.</div>
+          }
+        </div>
         <Button1 type="button" onClick={handleSubmit}>
           변 경 하 기
         </Button1>
