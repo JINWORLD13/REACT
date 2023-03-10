@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-do
 import styled from "styled-components";
 import  Header from '../../components/Header.js';
 import App from '../../App.js';
-
+       
 
 const Main = () => {
   return (
