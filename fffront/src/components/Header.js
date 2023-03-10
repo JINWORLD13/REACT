@@ -2,24 +2,24 @@ import React from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-// import Main from '../page/Main/Main.js';
+// 사용할 컴포넌트 import
+import CulturalEnv from "./classify/CulturalEnv";
+import Happiness from "./classify/Happiness";
 
 
 
 const Header = () => {
 
-
   return (
     <div>
       <Container>
         <LogoStyled>
-          <img className="Logo" src="./logo192.png" alt="임시로고" />
+        <NavLink to='/'><img className="Logo" src="./logo192.png" alt="임시로고" /></NavLink>
         </LogoStyled>
         <NavStyled>
           <ButtonStyled> {/* 버튼 스타일링 */}
-            <button>
-              <NavLink to='/'>로그인</NavLink>
-            </button>
+              <NavLink to='/Happiness'>행복 지수</NavLink>
+              <NavLink to='/CulturalEnv'>문화 환경</NavLink>
           </ButtonStyled>
         </NavStyled>
       </Container>
@@ -54,26 +54,23 @@ const NavStyled = styled.div`
 `;
 // a링크 대신 버튼으로 페이지 보낼 예정
 const ButtonStyled = styled.div`
+  
   & a {
+    padding : 1em;
     text-decoration: none;
     color: black;
-  } 
-  & button {
     background: none;
     border: none;
-    height: 85px;
-    width: 130px;
     background-color: rgba(44, 65, 251, 0);
     border-radius: 10%;
     pointer-events: painted;
-    margin-right: 30px;
-    display: inline;
-    font-size: x-large;
+    margin-right: 1em;
+    font-size: large;
     font-weight: bolder;
     :hover {
       background-color: #ffffff;
       cursor: pointer;
-    }
+    } 
   }
 `;
 export default Header;
