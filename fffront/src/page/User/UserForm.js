@@ -80,7 +80,7 @@ const UserForm = () => {
 
       <Wrapper>
         <H2>마이 페이지</H2>
-        <Label1 htmlFor="input_id">아이디</Label1>
+        <Label htmlFor="input_id">아이디</Label>
         <Input1
           type="text"
           name="input_id"
@@ -89,7 +89,7 @@ const UserForm = () => {
           onChange={handleInputId}
           placeholder="아이디를 입력해주세요."
         />
-        <Label2 htmlFor="input_pw">비밀번호</Label2>
+        <Label htmlFor="input_pw">비밀번호</Label>
         <Input2
           type="text"
           name="input_pw"
@@ -98,7 +98,7 @@ const UserForm = () => {
           onChange={handleInputPw}
           placeholder="비밀번호를 입력해주세요."
         />
-        <Label3 htmlFor="input_pw">비밀번호 재입력</Label3>
+        <Label htmlFor="input_pw">비밀번호 재입력</Label>
         <Input3
           type="text"
           name="input_pw"
@@ -209,7 +209,7 @@ const H2 = styled.h2`
 
   color: #000000;
 `;
-const Label1 = styled.label`
+const Label = styled.label`
   width: 700px;
   margin-bottom: 15px;
   text-align: left;
@@ -221,30 +221,7 @@ const Label1 = styled.label`
 
   color: #000000;
 `;
-const Label2 = styled.label`
-  width: 700px;
-  margin-bottom: 15px;
-  text-align: left;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 24px;
 
-  color: #000000;
-`;
-const Label3 = styled.label`
-  width: 700px;
-  margin-bottom: 15px;
-  text-align: left;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 24px;
-
-  color: #000000;
-`;
 const Input1 = styled.input`
   box-sizing: border-box;
   margin-bottom: 40px;

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const RegisterForm = () => {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
+  const [inputPwForCheck, setInputPwForCheck] = useState("");
   const navigate = useNavigate();
 
   const handleInputId = (e) => {
@@ -17,14 +18,13 @@ const RegisterForm = () => {
     setInputPw(e.target.value);
   };
 
-  // login 버튼 클릭 이벤트
-  const onClickLogin = () => {
-    console.log("click login");
+  const handleInputPwForCheck = (e) => {
+    setInputPwForCheck(e.target.value);
   };
 
-  // post로 데이터 등록
+  // post로 데이터 등록 (회원가입 버튼 클릭 이벤트)
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // ! 기본으로 정의된 이벤트를 작동 안시키게 함 -> ?????????
 
     const formData = {
       inputId,
@@ -34,7 +34,7 @@ const RegisterForm = () => {
       // formData로 묶은 값을 구조분해해서 전달
       // useEffect 고민
       axios
-        .post("http://localhost:8080/join", { ...formData })
+        .post("http://localhost:8080/api/join", { ...formData })
         .then(() => {
           alert("회원가입이 완료되었습니다.");
         })
@@ -80,7 +80,7 @@ const RegisterForm = () => {
 
       <Wrapper>
         <H2>Far-Away Home</H2>
-        <Label1 htmlFor="input_id">아이디</Label1>
+        <Label htmlFor="input_id">아이디</Label>
         <Input1
           type="text"
           name="input_id"
@@ -89,7 +89,7 @@ const RegisterForm = () => {
           onChange={handleInputId}
           placeholder="아이디를 입력해주세요."
         />
-        <Label2 htmlFor="input_pw">비밀번호</Label2>
+        <Label htmlFor="input_pw">비밀번호</Label>
         <Input2
           type="text"
           name="input_pw"
@@ -98,15 +98,18 @@ const RegisterForm = () => {
           onChange={handleInputPw}
           placeholder="비밀번호를 입력해주세요."
         />
-        <Label3 htmlFor="input_pw">비밀번호 재입력</Label3>
+        <Label htmlFor="input_pw">비밀번호 재입력</Label>
         <Input3
           type="text"
           name="input_pw"
-          value={inputPw}
+          value={inputPwForCheck}
           style={{ fontSize: "25px" }}
-          onChange={handleInputPw}
+          onChange={handleInputPwForCheck}
           placeholder="비밀번호를 재입력해주세요."
         />
+        {
+            inputPw === inputPwForCheck || inputPwForCheck.length === 0? null : <Label>비밀번호가 일치하지 않습니다.</Label>
+        }
         <Button1 type="button" onClick={handleSubmit}>
           회 원 가 입
         </Button1>
@@ -180,6 +183,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
 `;
 
 const LogoDiv = styled.div`
@@ -209,7 +213,7 @@ const H2 = styled.h2`
 
   color: #000000;
 `;
-const Label1 = styled.label`
+const Label = styled.label`
   width: 700px;
   margin-bottom: 15px;
   text-align: left;
@@ -221,30 +225,7 @@ const Label1 = styled.label`
 
   color: #000000;
 `;
-const Label2 = styled.label`
-  width: 700px;
-  margin-bottom: 15px;
-  text-align: left;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 24px;
 
-  color: #000000;
-`;
-const Label3 = styled.label`
-  width: 700px;
-  margin-bottom: 15px;
-  text-align: left;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 24px;
-
-  color: #000000;
-`;
 const Input1 = styled.input`
   box-sizing: border-box;
   margin-bottom: 40px;

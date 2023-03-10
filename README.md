@@ -1,8 +1,6 @@
 # Far-Away Home
 > 엘리스 AI트랙 6기 3팀
 
-## Merge Log
-
 ## 소개
 - 서비스명 : Far-Away Home
 - 개발기간 : 2022.03.06 ~ 2022.03.24

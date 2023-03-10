@@ -23,7 +23,7 @@ function LoginForm() {
         console.log('click login')
     }
  
-	// 페이지 렌더링 후 가장 처음 호출되는 함수
+	// 페이지 렌더링 후(html, css만 보여준 후) 가장 처음 호출되는 함수(토큰 가져오기)
     useEffect(() => {
         axios.get('/api/login')
         .then(res => console.log(res))
@@ -31,13 +31,6 @@ function LoginForm() {
     },
     // 페이지 호출 후 처음 한번만 호출될 수 있도록 [] 추가
     [])
-
-    const style = {
-      border: '1px solid red',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    };
 
     return(
         <div>
@@ -62,9 +55,9 @@ function LoginForm() {
             
             <Wrapper>
               <H2>Far-Away Home</H2>
-              <Label1 htmlFor='input_id'>아이디</Label1>
+              <Label htmlFor='input_id'>아이디</Label>
               <Input1 type='text' name='input_id' value={inputId} style={{ fontSize: "25px" }} onChange={handleInputId} placeholder="아이디를 입력해주세요."/>
-              <Label2 htmlFor='input_pw'>비밀번호</Label2>
+              <Label htmlFor='input_pw'>비밀번호</Label>
               <Input2 type='text' name='input_pw' value={inputPw} style={{ fontSize: "25px" }} onChange={handleInputPw} placeholder="비밀번호를 입력해주세요."/>
               <Button1 type='button' onClick={onClickLogin}>로 그 인</Button1>
               <Button2 type='button' onClick={()=>navigate('/join')}>회 원 가 입</Button2>
@@ -167,31 +160,7 @@ const H2 = styled.h2`
 
   color: #000000;
 `;
-const Label1 = styled.label`
-  width: 700px;
-  margin-bottom: 15px;
-  text-align: left;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 24px;
-
-  color: #000000;
-`;
-const Label2 = styled.label`
-  width: 700px;
-  margin-bottom: 15px;
-  text-align: left;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 24px;
-
-  color: #000000;
-`;
-const Label3 = styled.label`
+const Label = styled.label`
   width: 700px;
   margin-bottom: 15px;
   text-align: left;
@@ -221,15 +190,7 @@ const Input2 = styled.input`
   background: #ffffff;
   border: 1px solid #000000;
 `;
-const Input3 = styled.input`
-  box-sizing: border-box;
-  margin-bottom: 40px;
-  width: 700px;
-  height: 80px;
 
-  background: #ffffff;
-  border: 1px solid #000000;
-`;
 const Button1 = styled.button`
   width: 560px;
   height: 70px;
