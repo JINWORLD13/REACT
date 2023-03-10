@@ -15,6 +15,7 @@ const Happiness = () => {
             <ExplainSC2>
                 <H1SC>행복지수가 가장 높은 5개의 구는 다음과 같습니다!</H1SC>
                 {/* 가장 높은 5개의 구 그래프 */}
+                {/* 이 그래프의 CSS등을 어떻게 다루는게 좋을까요... */}
                 <HappinessHigh />
             </ExplainSC2>
             <ExplainSC1>
