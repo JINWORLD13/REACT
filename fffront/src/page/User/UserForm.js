@@ -5,53 +5,59 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const UserForm = () => {
-const [inputId, setInputId] = useState("");
-const [inputPw, setInputPw] = useState("");
-const [inputPwForCheck, setInputPwForCheck] = useState("");
-const navigate = useNavigate();
+    const [inputId, setInputId] = useState("");
+    const [inputPw, setInputPw] = useState("");
+    const [inputPwForCheck, setInputPwForCheck] = useState("");
+    const [selectedAddress, setInputAddress] = useState("");
+    const navigate = useNavigate();
 
-const handleInputId = (e) => {
-    setInputId(e.target.value);
-};
+    const handleInputId = (e) => {
+        setInputId(e.target.value);
+    };
 
-const handleInputPw = (e) => {
-    setInputPw(e.target.value);
-};
+    const handleInputPw = (e) => {
+        setInputPw(e.target.value);
+    };
 
-const handleInputPwForCheck = (e) => {
-    setInputPwForCheck(e.target.value);
-};
+    const handleInputPwForCheck = (e) => {
+        setInputPwForCheck(e.target.value);
+    };
 
-  // login 버튼 클릭 이벤트
-  const onClickLogin = () => {
-    console.log("click login");
-  };
+    const handleSelectedAddress = (e) => {
+        setInputAddress(e.target.value);
+    };
 
-  // post로 데이터 등록
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    // login 버튼 클릭 이벤트
+    const onClickLogin = () => {
+        console.log("click login");
+    };
+
+    // post로 데이터 등록
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
     const formData = {
-      inputId,
-      inputPw,
+        inputId,
+        inputPw,
+        selectedAddress
     };
     const onSubmit = () => {
       // formData로 묶은 값을 구조분해해서 전달
       // useEffect 고민
-      axios
-        .post("http://localhost:8080/join", { ...formData })
+        axios
+            .post("http://localhost:8080/join", { ...formData })
+            .then(() => {
+            alert("회원가입이 완료되었습니다.");
+            })
         .then(() => {
-          alert("회원가입이 완료되었습니다.");
-        })
-        .then(() => {
-          navigate("/LoginForm");
+            navigate("/LoginForm");
         })
         .catch((err) => {
-          alert("에러가 발생했습니다. 다시 시도해주세요.");
+            alert("에러가 발생했습니다. 다시 시도해주세요.");
         });
     };
-    onSubmit();
-  };
+        onSubmit();
+    };
   // 유효성 검사하는 로직인데 onSubmit에 2개의 함수를 넣어야 해서 보류
   // const handleSubmitCorrect = (event) => {
   //   const form = event.currentTarget;
@@ -62,73 +68,82 @@ const handleInputPwForCheck = (e) => {
   //   setValidated(true);
   // 값이 적절하지 않은 경우 빨간 테두리 (Form.Control.Feedback)
 
-  return (
-    <div>
-      <Nav>
-        <Ul1>
-          <LogoDiv>
-            <Link href="/">Logo</Link>
-          </LogoDiv>
-        </Ul1>
-        <Ul2>
-            <Li><Link href="/happiness">행복지수</Link></Li>
-            <Li><Link href="/environment">문화 환경 만족도</Link></Li>
-            <Li><Link href="/price">가격 비교</Link></Li>
-            <Li><Link href="/detail">아무개</Link></Li>
-        </Ul2>
-        <Ul3>
-            <Li><Link href="/mypage">마이페이지</Link></Li>
-            <Li><Link href="/login">로그인</Link></Li>
-            <Li><Link href="/join">회원가입</Link></Li>
-        </Ul3>
-      </Nav>
+    return (
+        <div>
+        <Nav>
+            <Ul1>
+            <LogoDiv>
+                <Link href="/">Logo</Link>
+            </LogoDiv>
+            </Ul1>
+            <Ul2>
+                <Li><Link href="/happiness">행복지수</Link></Li>
+                <Li><Link href="/environment">문화 환경 만족도</Link></Li>
+                <Li><Link href="/price">가격 비교</Link></Li>
+                <Li><Link href="/detail">아무개</Link></Li>
+            </Ul2>
+            <Ul3>
+                <Li><Link href="/mypage">마이페이지</Link></Li>
+                <Li><Link href="/login">로그인</Link></Li>
+                <Li><Link href="/join">회원가입</Link></Li>
+            </Ul3>
+        </Nav>
 
-      <Wrapper>
-        <H2>마이 페이지</H2>
-        <Label htmlFor="input_id">아이디</Label>
-        <Input1
-          type="text"
-          name="input_id"
-          value={inputId}
-          style={{ fontSize: "25px" }}
-          onChange={handleInputId}
-          placeholder="아이디를 입력해주세요."
-        />
-        <Label htmlFor="input_pw">비밀번호</Label>
-        <Input2
-          type="text"
-          name="input_pw"
-          value={inputPw}
-          style={{ fontSize: "25px" }}
-          onChange={handleInputPw}
-          placeholder="비밀번호를 입력해주세요."
-        />
-        <Label htmlFor="input_pw">비밀번호 재입력</Label>
-        <Input3
-          type="text"
-          name="input_pw"
-          value={inputPwForCheck}
-          style={{ fontSize: "25px", marginBottom: '0px' }}
-          onChange={handleInputPwForCheck}
-          placeholder="비밀번호를 재입력해주세요."
-        />
-        <div style ={{height: '40px'}}>
-          {
-              <div style={inputPw === inputPwForCheck || inputPwForCheck.length === 0? {display:"none"}:{display:"block", width: '700px',
-              textAlign: 'left',
-              fontFamily: "Inter",
-              fontStyle: 'normal',
-              fontWeight: 400,
-              fontSize: '25px',
-              lineHeight: '24px', color:"red"}}>비밀번호가 일치하지 않습니다.</div>
-          }
+        <Wrapper>
+            <H2>마이 페이지</H2>
+            <Label htmlFor="input_id">아이디</Label>
+            <Input
+            type="text"
+            name="input_id"
+            value={inputId}
+            style={{ fontSize: "25px" }}
+            onChange={handleInputId}
+            placeholder="아이디를 입력해주세요."
+            />
+            <Label htmlFor="input_pw">비밀번호</Label>
+            <Input
+            type="text"
+            name="input_pw"
+            value={inputPw}
+            style={{ fontSize: "25px" }}
+            onChange={handleInputPw}
+            placeholder="비밀번호를 입력해주세요."
+            />
+            <Label htmlFor="input_pw">비밀번호 재입력</Label>
+            <Input
+            type="text"
+            name="input_pw"
+            value={inputPwForCheck}
+            style={{ fontSize: "25px", marginBottom: '0px' }}
+            onChange={handleInputPwForCheck}
+            placeholder="비밀번호를 재입력해주세요."
+            />
+            <div style ={{height: '40px'}}>
+            {
+                <div style={inputPw === inputPwForCheck || inputPwForCheck.length === 0? {display:"none"}:{display:"block", width: '700px',
+                textAlign: 'left',
+                fontFamily: "Inter",
+                fontStyle: 'normal',
+                fontWeight: 400,
+                fontSize: '25px',
+                lineHeight: '24px', color:"red"}}>비밀번호가 일치하지 않습니다.</div>
+            }
+            </div>
+            <Label htmlFor="input_address">주소</Label>
+            <Select
+            type="text"
+            name="seletected-address"
+            value={selectedAddress}
+            style={{ fontSize: "25px" }}
+            onChange={handleSelectedAddress}
+            placeholder="거주하는 지역구를 골라주세요."
+            />
+            <Button1 type="button" onClick={handleSubmit}>
+            변 경 하 기
+            </Button1>
+        </Wrapper>
         </div>
-        <Button1 type="button" onClick={handleSubmit}>
-          변 경 하 기
-        </Button1>
-      </Wrapper>
-    </div>
-  );
+    );
 };
 
 const Nav = styled.nav`
@@ -190,14 +205,12 @@ const Link = styled.a`
   text-align: center;
   line-height: 1;
 `;
-
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
-
 const LogoDiv = styled.div`
   box-sizing: border-box;
   text-align: left;
@@ -238,7 +251,7 @@ const Label = styled.label`
   color: #000000;
 `;
 
-const Input1 = styled.input`
+const Input = styled.input`
   box-sizing: border-box;
   margin-bottom: 40px;
   width: 700px;
@@ -247,28 +260,23 @@ const Input1 = styled.input`
   background: #ffffff;
   border: 1px solid #000000;
 `;
-const Input2 = styled.input`
-  box-sizing: border-box;
-  margin-bottom: 40px;
+const Select = styled.select`
   width: 700px;
-  height: 80px;
+  margin-bottom: 15px;
+  text-align: left;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 24px;
+  height: 65px;
 
-  background: #ffffff;
-  border: 1px solid #000000;
-`;
-const Input3 = styled.input`
-  box-sizing: border-box;
-  margin-bottom: 40px;
-  width: 700px;
-  height: 80px;
-
-  background: #ffffff;
-  border: 1px solid #000000;
+  color: #000000;
 `;
 const Button1 = styled.button`
   width: 560px;
   height: 70px;
-  margin-top: 20px;
+  margin-top: 40px;
   margin-bottom: 40px;
 
   background: rgba(44, 65, 251, 0.73);

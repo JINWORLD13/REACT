@@ -8,6 +8,8 @@ const RegisterForm = () => {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
   const [inputPwForCheck, setInputPwForCheck] = useState("");
+  const [selectedAddress, setInputAddress] = useState("");
+  const [districts, setDistricts] = useState("");
   const navigate = useNavigate();
 
   const handleInputId = (e) => {
@@ -22,6 +24,18 @@ const RegisterForm = () => {
     setInputPwForCheck(e.target.value);
   };
 
+  const handleSelectedAddress = (e) => {
+    setInputAddress(e.target.value);
+  };
+
+  // 지역구 이름 가져오기
+  useEffect(() => {
+    axios.get('http//localhost:8080/api/join')
+      .then(data => {
+        // [...data.find(elem => elem["지역구"])]
+      })
+  }, [])
+
   // post로 데이터 등록 (회원가입 버튼 클릭 이벤트)
   const handleSubmit = (e) => {
     e.preventDefault(); // ! 기본으로 정의된 이벤트를 작동 안시키게 함 -> ?????????
@@ -29,6 +43,7 @@ const RegisterForm = () => {
     const formData = {
       inputId,
       inputPw,
+      selectedAddress
     };
     const onSubmit = () => {
       // formData로 묶은 값을 구조분해해서 전달
@@ -81,7 +96,7 @@ const RegisterForm = () => {
       <Wrapper>
         <H2>Far-Away Home</H2>
         <Label htmlFor="input_id">아이디</Label>
-        <Input1
+        <Input
           type="text"
           name="input_id"
           value={inputId}
@@ -90,7 +105,7 @@ const RegisterForm = () => {
           placeholder="아이디를 입력해주세요."
         />
         <Label htmlFor="input_pw">비밀번호</Label>
-        <Input2
+        <Input
           type="text"
           name="input_pw"
           value={inputPw}
@@ -99,7 +114,7 @@ const RegisterForm = () => {
           placeholder="비밀번호를 입력해주세요."
         />
         <Label htmlFor="input_pw">비밀번호 재입력</Label>
-        <Input3
+        <Input
           type="text"
           name="input_pw"
           value={inputPwForCheck}
@@ -118,6 +133,20 @@ const RegisterForm = () => {
               lineHeight: '24px', color:"red"}}>비밀번호가 일치하지 않습니다.</div>
           }
         </div>
+        <Label htmlFor="input_address">주소</Label>
+        <Select
+          name="seletected-address"
+          value={selectedAddress}
+          style={{ fontSize: "25px" }}
+          onChange={handleSelectedAddress}
+          placeholder="거주하는 지역구를 골라주세요."
+        >
+          {
+            ['강서구', '양천구'].map((elem, i) => {
+              <option>{elem}</option>
+            })
+          }
+        </Select>
         <Button1 type="button" onClick={handleSubmit}>
           회 원 가 입
         </Button1>
@@ -233,8 +262,21 @@ const Label = styled.label`
 
   color: #000000;
 `;
+const Select = styled.select`
+  width: 700px;
+  margin-bottom: 15px;
+  text-align: left;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 24px;
+  height: 65px;
 
-const Input1 = styled.input`
+  color: #000000;
+`;
+
+const Input = styled.input`
   box-sizing: border-box;
   margin-bottom: 40px;
   width: 700px;
@@ -243,28 +285,11 @@ const Input1 = styled.input`
   background: #ffffff;
   border: 1px solid #000000;
 `;
-const Input2 = styled.input`
-  box-sizing: border-box;
-  margin-bottom: 40px;
-  width: 700px;
-  height: 80px;
 
-  background: #ffffff;
-  border: 1px solid #000000;
-`;
-const Input3 = styled.input`
-  box-sizing: border-box;
-  margin-bottom: 40px;
-  width: 700px;
-  height: 80px;
-
-  background: #ffffff;
-  border: 1px solid #000000;
-`;
 const Button1 = styled.button`
   width: 560px;
   height: 70px;
-  margin-top: 20px;
+  margin-top: 40px;
   margin-bottom: 40px;
 
   background: rgba(44, 65, 251, 0.73);
