@@ -1,9 +1,33 @@
 import React from "react";
 import axios from "axios";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 // import Main from '../page/Main/Main.js';
 
+
+
+const Header = () => {
+
+
+  return (
+    <div>
+      <Container>
+        <LogoStyled>
+          <img className="Logo" src="./logo192.png" alt="임시로고" />
+        </LogoStyled>
+        <NavStyled>
+          <ButtonStyled> {/* 버튼 스타일링 */}
+            <button>
+              <NavLink to='/'>로그인</NavLink>
+            </button>
+          </ButtonStyled>
+        </NavStyled>
+      </Container>
+    </div>
+  );
+};
+
+// 스타일 영역
 const Container = styled.div`
   display: flex;
   /* margin : 10px 50px; */
@@ -30,6 +54,10 @@ const NavStyled = styled.div`
 `;
 // a링크 대신 버튼으로 페이지 보낼 예정
 const ButtonStyled = styled.div`
+  & a {
+    text-decoration: none;
+    color: black;
+  } 
   & button {
     background: none;
     border: none;
@@ -48,33 +76,4 @@ const ButtonStyled = styled.div`
     }
   }
 `;
-
-const Header = () => {
-  // usehistory 신버전
-  const navigate = useNavigate();
-
-  return (
-    <div>
-      <Container>
-        <LogoStyled>
-          <img className="Logo" src="./logo192.png" alt="임시로고" />
-        </LogoStyled>
-        <NavStyled>
-          <ButtonStyled>
-            <button onClick={() => navigate("/login")}>
-              <span>로그인</span>
-            </button>
-            <button onClick={() => navigate("/signin")}>
-              <span>회원가입</span>
-            </button>
-            <button onClick={() => navigate("/landing")}>
-              <span>소개페이지</span>
-            </button>
-          </ButtonStyled>
-        </NavStyled>
-      </Container>
-    </div>
-  );
-};
-
 export default Header;

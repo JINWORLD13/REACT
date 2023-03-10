@@ -1,21 +1,22 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import styled from "styled-components";
 import  Header from '../../components/Header.js';
-import App from '../../App.js';
+import Home from '../Home.js';
+// import LoginForm from '../Login/LoginForm.js';
        
 
 const Main = () => {
   return (
     <div>
-      <Header />
-      {/* <Router>
+      <Router>
+        <Header />
+        <div>
         <Routes>
-          <Route exact path="/" element={<App />} />
-          {/* <Route>this is Main Page.</Route>
-          <Route>this is Main Page.</Route> */}
-        {/* </Routes> */}
-      {/* </Router> */} 
+          <Route path="/" element={<Home />} />
+        </Routes>
+        </div>
+      </Router>
     </div>
   );
 };
