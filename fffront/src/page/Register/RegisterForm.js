@@ -142,7 +142,7 @@ const RegisterForm = () => {
           placeholder="거주하는 지역구를 골라주세요."
         >
           {
-            ['강서구', '양천구'].map((elem, i) => {
+            ['강서구', '양천구', '강남구'].map((elem, i) => {
               <option>{elem}</option>
             })
           }

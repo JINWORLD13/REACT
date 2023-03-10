@@ -1,4 +1,3 @@
-import './App.css';
 import { Routes, Route} from 'react-router-dom';
 import LoginForm from './page/Login/LoginForm';
 import RegisterForm from './page/Register/RegisterForm';
@@ -9,7 +8,7 @@ import Happiness from './components/classify/Happiness';
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Main />
       <Routes>
         <Route path="/login" element={<LoginForm/>} />
