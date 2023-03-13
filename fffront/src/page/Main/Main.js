@@ -6,6 +6,7 @@ import CulturalEnv from '../../components/classify/CulturalEnv';
 import Happiness from '../../components/classify/Happiness';
 import LoginForm from "../Login/LoginForm.js";
 import RegisterForm from "../Register/RegisterForm.js";
+import UserForm from "../../page/User/UserForm";
 import Home from '../Home.js';
 
 const Main = () => {
@@ -20,6 +21,7 @@ const Main = () => {
           <Route path="/Happiness" element={<Happiness />} />
           <Route path="/LoginForm" element={<LoginForm />} />
           <Route path="/RegisterForm" element={<RegisterForm />} />
+          <Route path="/UserForm" element={<UserForm />} />
         </Routes>
         </div>
       </Router>

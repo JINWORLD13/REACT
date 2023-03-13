@@ -22,6 +22,8 @@ const Header = () => {
               <NavLink to='/Happiness'>행복 지수</NavLink>
               <NavLink to='/CulturalEnv'>문화 환경</NavLink>
               <NavLink to ='/LoginForm'>로그인</NavLink>
+              <NavLink to ='/RegisterForm'>회원가입</NavLink>
+              <NavLink to ='/UserForm'>마이페이지</NavLink>
           </ButtonStyled>
         </NavStyled>
       </Container>
