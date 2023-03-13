@@ -16,23 +16,23 @@ const datahigh = [
 
 export default function HappinessHigh() {
   return (
-    <BarChart
-      width={500}
-      height={300}
-      data={datahigh}
-      margin={{
-        top: 5,
-        right: 30,
-        left: 20,
-        bottom: 5
-      }}
-    >
-      <CartesianGrid strokeDasharray="2 1" />
-      <XAxis dataKey="name" stroke = "black"/>
-      <YAxis/>
-      <Tooltip />
-      <Legend />
-      <Bar dataKey="행복지수" fill="Purple" barsize = {100} />
-    </BarChart>
+      <BarChart
+        width={500}
+        height={300}
+        data={datahigh}
+        margin={{
+          top: 5,
+          right: 30,
+          left: 20,
+          bottom: 5
+        }}
+      >
+        <CartesianGrid strokeDasharray="2 1" />
+        <XAxis dataKey="name" stroke = "black"/>
+        <YAxis/>
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="행복지수" fill="Purple" barsize = {100} />
+      </BarChart>
   );
 }
