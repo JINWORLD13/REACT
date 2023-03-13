@@ -20,6 +20,7 @@ const Header = () => {
           <ButtonStyled>
               <NavLink to='/Happiness'>행복 지수</NavLink>
               <NavLink to='/CulturalEnv'>문화 환경</NavLink>
+              <NavLink to ='/LoginForm'>로그인</NavLink>
           </ButtonStyled>
         </NavStyled>
       </Container>
