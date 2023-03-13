@@ -1,149 +1,250 @@
 // eslint-disable
 import axios from "axios";
 import styled from "styled-components";
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 
 const UserForm = () => {
-    const [inputId, setInputId] = useState("");
-    const [inputPw, setInputPw] = useState("");
-    const [inputPwForCheck, setInputPwForCheck] = useState("");
-    const [selectedAddress, setInputAddress] = useState("");
-    const navigate = useNavigate();
+  // ~
+  const [form, setForm] = useState({
+    inputEmail: "",
+    inputPw: "",
+    inputConfirmPw: "",
+    inputName: "",
+    inputPhoneNumber: "",
+    selectedDistrict: "",
+  });
 
-    const handleInputId = (e) => {
-        setInputId(e.target.value);
-    };
-
-    const handleInputPw = (e) => {
-        setInputPw(e.target.value);
-    };
-
-    const handleInputPwForCheck = (e) => {
-        setInputPwForCheck(e.target.value);
-    };
-
-    const handleSelectedAddress = (e) => {
-        setInputAddress(e.target.value);
-    };
-
-    // login 버튼 클릭 이벤트
-    const onClickLogin = () => {
-        console.log("click login");
-    };
-
-    // post로 데이터 등록
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-    const formData = {
-        inputId,
-        inputPw,
-        selectedAddress
-    };
-    const onSubmit = () => {
-      // formData로 묶은 값을 구조분해해서 전달
-      // useEffect 고민
-        axios
-            .post("http://localhost:8080/join", { ...formData })
-            .then(() => {
-            alert("회원가입이 완료되었습니다.");
-            })
-        .then(() => {
-            navigate("/LoginForm");
-        })
-        .catch((err) => {
-            alert("에러가 발생했습니다. 다시 시도해주세요.");
-        });
-    };
-        onSubmit();
-    };
-  // 유효성 검사하는 로직인데 onSubmit에 2개의 함수를 넣어야 해서 보류
-  // const handleSubmitCorrect = (event) => {
-  //   const form = event.currentTarget;
-  //   if (form.checkValidity() === false) {
-  //     event.preventDefault();
-  //     event.stopPropagation();
-  //   }
-  //   setValidated(true);
-  // 값이 적절하지 않은 경우 빨간 테두리 (Form.Control.Feedback)
-
-    return (
-        <div>
-        <Nav>
-            <Ul1>
-            <LogoDiv>
-                <Link href="/">Logo</Link>
-            </LogoDiv>
-            </Ul1>
-            <Ul2>
-                <Li><Link href="/happiness">행복지수</Link></Li>
-                <Li><Link href="/environment">문화 환경 만족도</Link></Li>
-                <Li><Link href="/price">가격 비교</Link></Li>
-                <Li><Link href="/detail">아무개</Link></Li>
-            </Ul2>
-            <Ul3>
-                <Li><Link href="/mypage">마이페이지</Link></Li>
-                <Li><Link href="/login">로그인</Link></Li>
-                <Li><Link href="/join">회원가입</Link></Li>
-            </Ul3>
-        </Nav>
-
-        <Wrapper>
-            <H2>마이 페이지</H2>
-            <Label htmlFor="input_id">아이디</Label>
-            <Input
-            type="text"
-            name="input_id"
-            value={inputId}
-            style={{ fontSize: "25px" }}
-            onChange={handleInputId}
-            placeholder="아이디를 입력해주세요."
-            />
-            <Label htmlFor="input_pw">비밀번호</Label>
-            <Input
-            type="text"
-            name="input_pw"
-            value={inputPw}
-            style={{ fontSize: "25px" }}
-            onChange={handleInputPw}
-            placeholder="비밀번호를 입력해주세요."
-            />
-            <Label htmlFor="input_pw">비밀번호 재입력</Label>
-            <Input
-            type="text"
-            name="input_pw"
-            value={inputPwForCheck}
-            style={{ fontSize: "25px", marginBottom: '0px' }}
-            onChange={handleInputPwForCheck}
-            placeholder="비밀번호를 재입력해주세요."
-            />
-            <div style ={{height: '40px'}}>
-            {
-                <div style={inputPw === inputPwForCheck || inputPwForCheck.length === 0? {display:"none"}:{display:"block", width: '700px',
-                textAlign: 'left',
-                fontFamily: "Inter",
-                fontStyle: 'normal',
-                fontWeight: 400,
-                fontSize: '25px',
-                lineHeight: '24px', color:"red"}}>비밀번호가 일치하지 않습니다.</div>
-            }
-            </div>
-            <Label htmlFor="input_address">주소</Label>
-            <Select
-            type="text"
-            name="seletected-address"
-            value={selectedAddress}
-            style={{ fontSize: "25px" }}
-            onChange={handleSelectedAddress}
-            placeholder="거주하는 지역구를 골라주세요."
-            />
-            <Button1 type="button" onClick={handleSubmit}>
-            변 경 하 기
-            </Button1>
-        </Wrapper>
-        </div>
+  // ~
+  const handleInputEmail = (e) => {
+    setForm(
+      e.target.value,
+      form.inputPw,
+      form.inputConfirmPw,
+      form.inputName,
+      form.inputPhoneNumber,
+      form.selectedDistrict
     );
+  };
+  const handleInputPw = (e) => {
+    setForm(
+      form.inputEmail,
+      e.target.value,
+      form.inputConfirmPw,
+      form.inputName,
+      form.inputPhoneNumber,
+      form.selectedDistrict
+    );
+  };
+  const handleInputConfirmPw = (e) => {
+    setForm(
+      form.inputEmail,
+      form.inputPw,
+      e.target.value,
+      form.inputName,
+      form.inputPhoneNumber,
+      form.selectedDistrict
+    );
+  };
+  const handleInputName = (e) => {
+    setForm(
+      form.inputEmail,
+      form.inputPw,
+      form.inputConfirmPw,
+      e.target.value,
+      form.inputPhoneNumber,
+      form.selectedDistrict
+    );
+  };
+  const handleInputPhoneNumber = (e) => {
+    setForm(
+      form.inputEmail,
+      form.inputPw,
+      form.inputConfirmPw,
+      form.inputName,
+      e.target.value,
+      form.selectedDistrict
+    );
+  };
+  const handleSelectedDistrict = (e) => {
+    setForm(
+      form.inputEmail,
+      form.inputPw,
+      form.inputConfirmPw,
+      form.inputName,
+      form.inputPhoneNumber,
+      e.target.value
+    );
+  };
+
+  // ~
+  // 1단계 : 유효성 검사(형식 체크)
+  const validateInputEmail = (inputEmail) => {
+    const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    return emailRegex.test(inputEmail);
+  };
+  const validateInputPw = (inputPw) => {
+    const pwRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{10,25}$/;
+    return pwRegex.test(inputPw)
+  };
+  const validateInputName = (inputName) => {
+    const nameRegex = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
+    return nameRegex.test(inputName);
+  };
+  const validateInputPhoneNumber = (inputPhoneNumber) => {
+    const phoneNumberRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+    return phoneNumberRegex.test(inputPhoneNumber);
+  };
+
+  // 2단계 : 유효성 검사 함수로 정리하기(true?)
+  const isInputEmailValid = validateInputEmail(form.inputEmail);
+  const isInputPwValid = validateInputPw(form.inputPw);
+  const isInputConfirmPwValid = form.inputPw === form.inputConfirmPw;
+  const isInputNameValid = validateInputName(form.inputName);
+  const isInputPhoneNumberValid = validateInputPhoneNumber(form.inputPhoneNumber);
+  const isAllValid = isInputEmailValid && isInputPwValid && isInputConfirmPwValid && isInputNameValid && isInputPhoneNumberValid 
+
+  // ~
+  // post로 유저 데이터 변경
+  const handleUser = (e) => {
+    e.preventDefault();
+    if(isAllValid === true){
+      const onClickModify = async () => {
+        await axios
+          .post('http://localhost8080/api/user', { ...form })
+          .then(() => {
+            alert("유저 정보가 변경되었습니다.");
+          })
+          .catch((err) => {
+            alert("에러가 발생했습니다. 다시 시도해주세요.");
+            console.log(err);
+          });
+      };
+      onClickModify();
+    }
+    
+  };
+
+  return (
+    <div>
+      <Nav>
+        <Ul1>
+          <LogoDiv>
+            <Link href="/">Logo</Link>
+          </LogoDiv>
+        </Ul1>
+        <Ul2>
+          <Li>
+            <Link href="/happiness">행복지수</Link>
+          </Li>
+          <Li>
+            <Link href="/environment">문화 환경 만족도</Link>
+          </Li>
+          <Li>
+            <Link href="/price">가격 비교</Link>
+          </Li>
+          <Li>
+            <Link href="/detail">아무개</Link>
+          </Li>
+        </Ul2>
+        <Ul3>
+          <Li>
+            <Link href="/mypage">마이페이지</Link>
+          </Li>
+          <Li>
+            <Link href="/login">로그인</Link>
+          </Li>
+          <Li>
+            <Link href="/register">회원가입</Link>
+          </Li>
+        </Ul3>
+      </Nav>
+
+      <Wrapper>
+        <H2>마이 페이지</H2>
+        <Label htmlFor="input_id">이메일</Label>
+        <Input
+          type="text"
+          name="input_id"
+          value={form.inputEmail}
+          style={{ fontSize: "25px" }}
+          onChange={handleInputEmail}
+          placeholder="아이디를 입력해주세요."
+        />
+        <Label htmlFor="input_pw">비밀번호</Label>
+        <Input
+          type="text"
+          name="input_pw"
+          value={form.inputPw}
+          style={{ fontSize: "25px" }}
+          onChange={handleInputPw}
+          placeholder="비밀번호를 입력해주세요."
+        />
+        <Label htmlFor="input_confirm_pw">비밀번호 재입력</Label>
+        <Input
+          type="text"
+          name="input_confirm_pw"
+          value={form.inputConfirmPw}
+          style={{ fontSize: "25px", marginBottom: "0px" }}
+          onChange={handleInputConfirmPw}
+          placeholder="비밀번호를 재입력해주세요."
+        />
+        <div style={{ height: "40px" }}>
+          {
+            <div
+              style={
+                form.inputPw === form.inputConfirmPw ||
+                form.inputConfirmPw.length === 0
+                  ? { display: "none" }
+                  : {
+                      display: "block",
+                      width: "700px",
+                      textAlign: "left",
+                      fontFamily: "Inter",
+                      fontStyle: "normal",
+                      fontWeight: 400,
+                      fontSize: "25px",
+                      lineHeight: "24px",
+                      color: "red",
+                    }
+              }
+            >
+              비밀번호가 일치하지 않습니다.
+            </div>
+          }
+        </div>
+        <Label htmlFor="input_name">이름</Label>
+        <Input
+          type="text"
+          name="input_name"
+          value={form.inputName}
+          style={{ fontSize: "25px", marginBottom: "0px" }}
+          onChange={handleInputName}
+          placeholder="이름을 입력해주세요."
+        />
+        <Label htmlFor="input_phone_number">핸드폰 번호</Label>
+        <Input
+          type="text"
+          name="input_phone_number"
+          value={form.inputPhoneNumber}
+          style={{ fontSize: "25px", marginBottom: "0px" }}
+          onChange={handleInputPhoneNumber}
+          placeholder="핸드폰 번호를 입력해주세요."
+        />
+        <Label htmlFor="input_district">주소</Label>
+        <Select
+          type="text"
+          name="seletected-district"
+          value={form.selectedDistrict}
+          style={{ fontSize: "25px" }}
+          onChange={handleSelectedDistrict}
+          placeholder="거주하는 지역구를 골라주세요."
+        />
+        <Button style={{marginTop:"40px"}} type="button" onClick={handleUser}>
+          변 경 하 기
+        </Button>
+      </Wrapper>
+    </div>
+  );
 };
 
 const Nav = styled.nav`
@@ -273,10 +374,9 @@ const Select = styled.select`
 
   color: #000000;
 `;
-const Button1 = styled.button`
+const Button = styled.button`
   width: 560px;
   height: 70px;
-  margin-top: 40px;
   margin-bottom: 40px;
 
   background: rgba(44, 65, 251, 0.73);
