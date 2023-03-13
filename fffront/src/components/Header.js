@@ -1,21 +1,22 @@
 /*eslint-disable*/
-import React from "react";
+import React , { useLocation } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-// 사용할 컴포넌트 import
-import CulturalEnv from "./classify/CulturalEnv";
-import Happiness from "./classify/Happiness";
-
+// 20220314 이효상 ROUTE import
+import { ROUTE, ROUTE_ARR } from "../data/route/route";
 
 
 const Header = () => {
+  const location = useLocation();
+  const pathname = location.pathname;
+  const route = ROUTE_ARR.find((el) => el.path === location.pathname);
 
   return (
     <div>
       <Container>
         <LogoStyled>
-        <NavLink to='/'><img className="Logo" src="./logo192.png" alt="임시로고" /></NavLink>
+        <NavLink to={ROUTE.HOME.link}><img className="Logo" src="./logo192.png" alt="임시로고" /></NavLink>
         </LogoStyled>
         <NavStyled>
           <ButtonStyled>
