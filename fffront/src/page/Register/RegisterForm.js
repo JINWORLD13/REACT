@@ -149,10 +149,34 @@ const RegisterForm = () => {
         <Input
           type="text"
           name="input_email"
-          style={{ fontSize: "25px" }}
+          style={{ fontSize: "25px", marginBottom: "0px" }}
           onChange={handleInputEmail}
           placeholder="이메일을 입력해주세요."
         />
+        <div style={{ height: "40px" }}>
+          {
+            <div
+              style={
+                isInputEmailValid === true || form.inputEmail.length == 0
+                  ? { display: "none" }
+                  : {
+                      display: "block",
+                      marginTop: "0px",
+                      width: "700px",
+                      textAlign: "left",
+                      fontFamily: "Inter",
+                      fontStyle: "normal",
+                      fontWeight: 400,
+                      fontSize: "25px",
+                      lineHeight: "24px",
+                      color: "red",
+                    }
+              }
+            >
+              이메일 형식이 맞지 않습니다.
+            </div>
+          }
+        </div>
         <Label htmlFor="input_pw">비밀번호</Label>
         <Input
           type="text"
@@ -198,18 +222,66 @@ const RegisterForm = () => {
         <Input
           type="text"
           name="input_name"
-          style={{ fontSize: "25px"}}
+          style={{ fontSize: "25px", marginBottom: '0px'}}
           onChange={handleInputName}
           placeholder="이름을 입력해주세요."
         />
+         <div style={{ height: "40px" }}>
+          {
+            <div
+              style={
+                isInputNameValid === true|| form.inputName.length == 0
+                  ? { display: "none" }
+                  : {
+                      display: "block",
+                      marginTop: "0px",
+                      width: "700px",
+                      textAlign: "left",
+                      fontFamily: "Inter",
+                      fontStyle: "normal",
+                      fontWeight: 400,
+                      fontSize: "25px",
+                      lineHeight: "24px",
+                      color: "red",
+                    }
+              }
+            >
+              이름 형식이 맞지 않습니다.
+            </div>
+          }
+        </div>
         <Label htmlFor="input_phone_number">핸드폰 번호</Label>
         <Input
           type="text"
           name="input_phone_number"
-          style={{ fontSize: "25px"}}
+          style={{ fontSize: "25px", marginBottom: "0px"}}
           onChange={handleInputPhoneNumber}
           placeholder="핸드폰 번호를 입력해주세요."
         />
+         <div style={{ height: "40px" }}>
+          {
+            <div
+              style={
+                isInputPhoneNumberValid === true|| form.inputPhoneNumber.length == 0
+                  ? { display: "none" }
+                  : {
+                      display: "block",
+                      marginTop: "0px",
+                      width: "700px",
+                      textAlign: "left",
+                      fontFamily: "Inter",
+                      fontStyle: "normal",
+                      fontWeight: 400,
+                      fontSize: "25px",
+                      lineHeight: "24px",
+                      color: "red",
+                    }
+              }
+            >
+              핸드폰 번호 형식이 맞지 않습니다.
+            </div>
+          }
+        </div>
         <Label htmlFor="input_district">주소</Label>
         <Select
           name="seletected-district"

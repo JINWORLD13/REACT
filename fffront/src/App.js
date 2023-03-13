@@ -22,7 +22,7 @@ function App() {
 
   return (
     <div>
-      <Main />
+      {/* <Main /> */}
       <Routes>
         <Route path="/login" element={<LoginForm />}/>
         <Route path="/register" element={<RegisterForm />}/>
