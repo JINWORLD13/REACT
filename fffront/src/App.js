@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import LoginForm from "./page/Login/LoginForm";
@@ -21,12 +22,12 @@ function App() {
 
   return (
     <div>
-      <Main />
-      {/* <Routes>
+      {/* <Main /> */}
+      <Routes>
         <Route path="/login" element={<LoginForm />}/>
         <Route path="/register" element={<RegisterForm />}/>
         <Route path="/mypage" element={<UserForm />}/>
-      </Routes> */}
+      </Routes>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-// eslint-disable
+/*eslint-disable*/
 import axios from "axios";
 import styled from "styled-components";
 import React, { useState } from "react";
@@ -13,66 +13,41 @@ const UserForm = () => {
     inputPhoneNumber: "",
     selectedDistrict: "",
   });
-
-  // ~
+  
   const handleInputEmail = (e) => {
     setForm(
-      e.target.value,
-      form.inputPw,
-      form.inputConfirmPw,
-      form.inputName,
-      form.inputPhoneNumber,
-      form.selectedDistrict
+      {...form,
+      inputEmail: e.target.value,}
     );
   };
   const handleInputPw = (e) => {
     setForm(
-      form.inputEmail,
-      e.target.value,
-      form.inputConfirmPw,
-      form.inputName,
-      form.inputPhoneNumber,
-      form.selectedDistrict
+      {...form,
+        inputPw: e.target.value,}
     );
   };
   const handleInputConfirmPw = (e) => {
     setForm(
-      form.inputEmail,
-      form.inputPw,
-      e.target.value,
-      form.inputName,
-      form.inputPhoneNumber,
-      form.selectedDistrict
+      {...form,
+        inputConfirmPw: e.target.value,}
     );
   };
   const handleInputName = (e) => {
     setForm(
-      form.inputEmail,
-      form.inputPw,
-      form.inputConfirmPw,
-      e.target.value,
-      form.inputPhoneNumber,
-      form.selectedDistrict
+      {...form,
+        inputName: e.target.value,}
     );
   };
   const handleInputPhoneNumber = (e) => {
     setForm(
-      form.inputEmail,
-      form.inputPw,
-      form.inputConfirmPw,
-      form.inputName,
-      e.target.value,
-      form.selectedDistrict
+      {...form,
+        inputPhoneNumber: e.target.value,}
     );
   };
   const handleSelectedDistrict = (e) => {
     setForm(
-      form.inputEmail,
-      form.inputPw,
-      form.inputConfirmPw,
-      form.inputName,
-      form.inputPhoneNumber,
-      e.target.value
+      {...form,
+        selectedDistrict: e.target.value,}
     );
   };
 
@@ -161,20 +136,18 @@ const UserForm = () => {
 
       <Wrapper>
         <H2>마이 페이지</H2>
-        <Label htmlFor="input_id">이메일</Label>
+        <Label htmlFor="input_email">이메일</Label>
         <Input
           type="text"
-          name="input_id"
-          value={form.inputEmail}
+          name="input_email"
           style={{ fontSize: "25px" }}
           onChange={handleInputEmail}
-          placeholder="아이디를 입력해주세요."
+          placeholder="이메일을 입력해주세요."
         />
         <Label htmlFor="input_pw">비밀번호</Label>
         <Input
           type="text"
           name="input_pw"
-          value={form.inputPw}
           style={{ fontSize: "25px" }}
           onChange={handleInputPw}
           placeholder="비밀번호를 입력해주세요."
@@ -183,7 +156,6 @@ const UserForm = () => {
         <Input
           type="text"
           name="input_confirm_pw"
-          value={form.inputConfirmPw}
           style={{ fontSize: "25px", marginBottom: "0px" }}
           onChange={handleInputConfirmPw}
           placeholder="비밀번호를 재입력해주세요."
@@ -192,7 +164,7 @@ const UserForm = () => {
           {
             <div
               style={
-                form.inputPw === form.inputConfirmPw ||
+                isInputConfirmPwValid === true ||
                 form.inputConfirmPw.length === 0
                   ? { display: "none" }
                   : {
@@ -216,8 +188,7 @@ const UserForm = () => {
         <Input
           type="text"
           name="input_name"
-          value={form.inputName}
-          style={{ fontSize: "25px", marginBottom: "0px" }}
+          style={{ fontSize: "25px"}}
           onChange={handleInputName}
           placeholder="이름을 입력해주세요."
         />
@@ -225,20 +196,23 @@ const UserForm = () => {
         <Input
           type="text"
           name="input_phone_number"
-          value={form.inputPhoneNumber}
-          style={{ fontSize: "25px", marginBottom: "0px" }}
+          style={{ fontSize: "25px"}}
           onChange={handleInputPhoneNumber}
           placeholder="핸드폰 번호를 입력해주세요."
         />
         <Label htmlFor="input_district">주소</Label>
         <Select
-          type="text"
           name="seletected-district"
-          value={form.selectedDistrict}
           style={{ fontSize: "25px" }}
           onChange={handleSelectedDistrict}
           placeholder="거주하는 지역구를 골라주세요."
-        />
+        >
+          {
+            ["강서구", "양천구", "강남구"].map((elem, i) => (
+              <option key={i}>{elem}</option>
+            ))
+          }
+        </Select>
         <Button style={{marginTop:"40px"}} type="button" onClick={handleUser}>
           변 경 하 기
         </Button>

@@ -1,12 +1,10 @@
-// eslint-disable
+/*eslint-disable*/
 import axios from "axios";
 import styled from "styled-components";
-import React, { useState, useEffect, useCallback, useNavigate } from "react";
+import React, { useState, useEffect } from "react";
 
 
 const RegisterForm = () => {
-  const navigate = useNavigate();
-  // ~
   const [form, setForm] = useState({
     inputEmail: "",
     inputPw: "",
@@ -15,66 +13,41 @@ const RegisterForm = () => {
     inputPhoneNumber: "",
     selectedDistrict: "",
   });
-
-  // ~
+  
   const handleInputEmail = (e) => {
     setForm(
-      e.target.value,
-      form.inputPw,
-      form.inputConfirmPw,
-      form.inputName,
-      form.inputPhoneNumber,
-      form.selectedDistrict
+      {...form,
+      inputEmail: e.target.value,}
     );
   };
   const handleInputPw = (e) => {
     setForm(
-      form.inputEmail,
-      e.target.value,
-      form.inputConfirmPw,
-      form.inputName,
-      form.inputPhoneNumber,
-      form.selectedDistrict
+      {...form,
+        inputPw: e.target.value,}
     );
   };
   const handleInputConfirmPw = (e) => {
     setForm(
-      form.inputEmail,
-      form.inputPw,
-      e.target.value,
-      form.inputName,
-      form.inputPhoneNumber,
-      form.selectedDistrict
+      {...form,
+        inputConfirmPw: e.target.value,}
     );
   };
   const handleInputName = (e) => {
     setForm(
-      form.inputEmail,
-      form.inputPw,
-      form.inputConfirmPw,
-      e.target.value,
-      form.inputPhoneNumber,
-      form.selectedDistrict
+      {...form,
+        inputName: e.target.value,}
     );
   };
   const handleInputPhoneNumber = (e) => {
     setForm(
-      form.inputEmail,
-      form.inputPw,
-      form.inputConfirmPw,
-      form.inputName,
-      e.target.value,
-      form.selectedDistrict
+      {...form,
+        inputPhoneNumber: e.target.value,}
     );
   };
   const handleSelectedDistrict = (e) => {
     setForm(
-      form.inputEmail,
-      form.inputPw,
-      form.inputConfirmPw,
-      form.inputName,
-      form.inputPhoneNumber,
-      e.target.value
+      {...form,
+        selectedDistrict: e.target.value,}
     );
   };
 
@@ -83,7 +56,8 @@ const RegisterForm = () => {
     axios.get("http//localhost:8080/api/districts")
       .then((data) => {
       // [...data.find(elem => elem["지역구"])]
-    });
+    })
+      .catch( err => console.log(err));
   }, []);
 
   // ~
@@ -170,12 +144,11 @@ const RegisterForm = () => {
       </Nav>
 
       <Wrapper>
-        <H2>Far-Away Home</H2>
+        <H2>회 원 가 입</H2>
         <Label htmlFor="input_email">이메일</Label>
         <Input
           type="text"
           name="input_email"
-          value={form.inputEmail}
           style={{ fontSize: "25px" }}
           onChange={handleInputEmail}
           placeholder="이메일을 입력해주세요."
@@ -184,7 +157,6 @@ const RegisterForm = () => {
         <Input
           type="text"
           name="input_pw"
-          value={form.inputPw}
           style={{ fontSize: "25px" }}
           onChange={handleInputPw}
           placeholder="비밀번호를 입력해주세요."
@@ -193,7 +165,6 @@ const RegisterForm = () => {
         <Input
           type="text"
           name="input_confirm_pw"
-          value={form.inputConfirmPw}
           style={{ fontSize: "25px", marginBottom: "0px" }}
           onChange={handleInputConfirmPw}
           placeholder="비밀번호를 재입력해주세요."
@@ -202,10 +173,12 @@ const RegisterForm = () => {
           {
             <div
               style={
-                isInputConfirmPwValid || form.inputConfirmPw.length === 0
+                isInputConfirmPwValid === true ||
+                form.inputConfirmPw.length === 0
                   ? { display: "none" }
                   : {
                       display: "block",
+                      marginTop: "0px",
                       width: "700px",
                       textAlign: "left",
                       fontFamily: "Inter",
@@ -225,8 +198,7 @@ const RegisterForm = () => {
         <Input
           type="text"
           name="input_name"
-          value={form.inputName}
-          style={{ fontSize: "25px", marginBottom: "0px" }}
+          style={{ fontSize: "25px"}}
           onChange={handleInputName}
           placeholder="이름을 입력해주세요."
         />
@@ -234,15 +206,13 @@ const RegisterForm = () => {
         <Input
           type="text"
           name="input_phone_number"
-          value={form.inputPhoneNumber}
-          style={{ fontSize: "25px", marginBottom: "0px" }}
+          style={{ fontSize: "25px"}}
           onChange={handleInputPhoneNumber}
           placeholder="핸드폰 번호를 입력해주세요."
         />
         <Label htmlFor="input_district">주소</Label>
         <Select
           name="seletected-district"
-          value={form.selectedDistrict}
           style={{ fontSize: "25px" }}
           onChange={handleSelectedDistrict}
           placeholder="거주하는 지역구를 골라주세요."
@@ -253,8 +223,7 @@ const RegisterForm = () => {
             ))
           }
         </Select>
-        
-        <Button style={{marginTop: "40px"}} type="button" onClick={handleRegister}>
+        <Button style={{marginTop:"40px"}} type="button" onClick={handleRegister}>
           회 원 가 입
         </Button>
       </Wrapper>
@@ -321,14 +290,12 @@ const Link = styled.a`
   text-align: center;
   line-height: 1;
 `;
-
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
-
 const LogoDiv = styled.div`
   box-sizing: border-box;
   text-align: left;
@@ -368,6 +335,16 @@ const Label = styled.label`
 
   color: #000000;
 `;
+
+const Input = styled.input`
+  box-sizing: border-box;
+  margin-bottom: 40px;
+  width: 700px;
+  height: 80px;
+
+  background: #ffffff;
+  border: 1px solid #000000;
+`;
 const Select = styled.select`
   width: 700px;
   margin-bottom: 15px;
@@ -381,17 +358,6 @@ const Select = styled.select`
 
   color: #000000;
 `;
-
-const Input = styled.input`
-  box-sizing: border-box;
-  margin-bottom: 40px;
-  width: 700px;
-  height: 80px;
-
-  background: #ffffff;
-  border: 1px solid #000000;
-`;
-
 const Button = styled.button`
   width: 560px;
   height: 70px;
