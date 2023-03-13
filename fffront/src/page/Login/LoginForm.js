@@ -16,17 +16,12 @@ function LoginForm() {
 
   // ~
   // input data 의 변화가 있을 때마다 value 값을 변경해서 useState 해준다
-  const handleInputEmail = (e) => {
-    setForm(
-      {...form,
-      inputEmail: e.target.value,}
-    );
-  };
-  const handleInputPw = (e) => {
-    setForm(
-      {...form,
-      inputPw: e.target.value,}
-    );
+  const handleState = (e) => {
+    const { name, value } = e.target; // input 태그의 name속성(name을 state명이랑 같게 해야) 및 value속성을 뽑음
+    setForm((form) => ({
+      ...form, // state(객체형) 변경법
+      [name] : value // 표현법이 신기(대괄호 붙임)
+    }));
   };
 
   //~
@@ -65,7 +60,7 @@ function LoginForm() {
 
   return (
     <div>
-      <Nav>
+      {/* <Nav>
         <Ul1>
           <LogoDiv>
             <Link href="/">Logo</Link>
@@ -96,24 +91,24 @@ function LoginForm() {
             <Link href="/register">회원가입</Link>
           </Li>
         </Ul3>
-      </Nav>
+      </Nav> */}
 
       <Wrapper>
         <H2>Far-Away Home</H2>
-        <Label htmlFor="input_email">이메일</Label>
+        <Label htmlFor="inputEmail">이메일</Label>
         <Input
           type="text"
-          name="input_email"
+          name="inputEmail"
           style={{ fontSize: "25px" }}
-          onChange={handleInputEmail}
+          onChange={handleState}
           placeholder="이메일을 입력해주세요."
         />
-        <Label htmlFor="input_pw">비밀번호</Label>
+        <Label htmlFor="inputPw">비밀번호</Label>
         <Input
           type="text"
-          name="input_pw"
+          name="inputPw"
           style={{ fontSize: "25px" }}
-          onChange={handleInputPw}
+          onChange={handleState}
           placeholder="비밀번호를 입력해주세요."
         />
         <Button style={{marginTop:"40px"}} type="button" onClick={e=>{onClickLogin(e)}}>
@@ -127,92 +122,93 @@ function LoginForm() {
   );
 }
 
-const Nav = styled.nav`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  width: 100%;
-  height: 10%;
-  background-color: white;
-  border: 5px solid black;
-  margin-bottom: 100px;
-`;
-const Ul1 = styled.ul`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  justify-content: flex-start;
-  width: 40%;
-  height: 100px;
-  color: white;
-  list-style-type: none;
-  font-size: 2em;
-`;
-const Ul2 = styled.ul`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  justify-content: flex-start;
-  width: 100%;
-  height: 100px;
-  color: white;
-  list-style-type: none;
-  font-size: 2em;
-`;
-const Ul3 = styled.ul`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  justify-content: flex-end;
-  width: 50%;
-  color: white;
-  list-style-type: none;
-  font-size: 2em;
-`;
-const Li = styled.li`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 30px;
-  margin-right: 30px;
-`;
-const Link = styled.a`
-  color: black;
-  padding: 14px 16px;
-  text-decoration: none;
-  text-align: center;
-  line-height: 1;
-`;
-const LogoDiv = styled.div`
-  box-sizing: border-box;
-  text-align: left;
-  width: 130px;
-  height: 80px;
-  left: 20px;
-  top: 31px;
-  display: inline-block;
-  align-items: center;
-  vertical-align: middle;
-  text-align: center;
+// const Nav = styled.nav`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: flex-start;
+//   width: 100%;
+//   height: 10%;
+//   background-color: white;
+//   border: 5px solid black;
+//   margin-bottom: 100px;
+// `;
+// const Ul1 = styled.ul`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: row;
+//   justify-content: flex-start;
+//   width: 40%;
+//   height: 100px;
+//   color: white;
+//   list-style-type: none;
+//   font-size: 2em;
+// `;
+// const Ul2 = styled.ul`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: row;
+//   justify-content: flex-start;
+//   width: 100%;
+//   height: 100px;
+//   color: white;
+//   list-style-type: none;
+//   font-size: 2em;
+// `;
+// const Ul3 = styled.ul`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   flex-direction: row;
+//   justify-content: flex-end;
+//   width: 50%;
+//   color: white;
+//   list-style-type: none;
+//   font-size: 2em;
+// `;
+// const Li = styled.li`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   margin-left: 30px;
+//   margin-right: 30px;
+// `;
+// const Link = styled.a`
+//   color: black;
+//   padding: 14px 16px;
+//   text-decoration: none;
+//   text-align: center;
+//   line-height: 1;
+// `;
+// const LogoDiv = styled.div`
+//   box-sizing: border-box;
+//   text-align: left;
+//   width: 130px;
+//   height: 80px;
+//   left: 20px;
+//   top: 31px;
+//   display: inline-block;
+//   align-items: center;
+//   vertical-align: middle;
+//   text-align: center;
 
-  border: 1px solid #000000;
-`;
+//   border: 1px solid #000000;
+// `;
+
+// const Form = styled.form`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+// `;
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
 const H2 = styled.h2`
   text-align: center;
   margin-bottom: 90px;
