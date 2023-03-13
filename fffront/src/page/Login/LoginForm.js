@@ -174,7 +174,7 @@ function LoginForm() {
                 <Label htmlFor='input_pw'>비밀번호</Label>
                 <Input type='text' name='input_pw' value={inputPw} style={{ fontSize: "25px" }} onChange={handleInputPw} placeholder="비밀번호를 입력해주세요."/>
                 <Button1 type='button' onClick={onClickLogin}>로 그 인</Button1>
-                <Button2 type='button' onClick={()=>navigate('/join')}>회 원 가 입</Button2>
+                <Button2 type='button' onClick={()=>navigate('/RegisterForm')}>회 원 가 입</Button2>
               </Form>
             </Wrapper>
         </div>
