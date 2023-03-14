@@ -1,7 +1,8 @@
 /*eslint-disable*/
-import axios from "axios";
 import styled from "styled-components";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { userApi } from "../../api/api";
+import { Wrapper, H2, Label, Input, Select, Button, } from './UserForm.styled';
 
 const UserForm = () => {
   // ~
@@ -13,24 +14,25 @@ const UserForm = () => {
     inputPhoneNumber: "",
     selectedDistrict: "",
   });
-  
+
   const handleState = (e) => {
     const { name, value } = e.target; // input 태그의 name속성(name을 state명이랑 같게 해야) 및 value속성을 뽑음
     setForm((form) => ({
       ...form, // state(객체형) 변경법
-      [name] : value // 표현법이 신기(대괄호 붙임)
+      [name]: value, // 표현법이 신기(대괄호 붙임)
     }));
   };
 
   // ~
   // 1단계 : 유효성 검사(형식 체크)
   const validateInputEmail = (inputEmail) => {
-    const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    const emailRegex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     return emailRegex.test(inputEmail);
   };
   const validateInputPw = (inputPw) => {
     const pwRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{10,25}$/;
-    return pwRegex.test(inputPw)
+    return pwRegex.test(inputPw);
   };
   const validateInputName = (inputName) => {
     const nameRegex = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
@@ -46,28 +48,36 @@ const UserForm = () => {
   const isInputPwValid = validateInputPw(form.inputPw);
   const isInputConfirmPwValid = form.inputPw === form.inputConfirmPw;
   const isInputNameValid = validateInputName(form.inputName);
-  const isInputPhoneNumberValid = validateInputPhoneNumber(form.inputPhoneNumber);
-  const isAllValid = isInputEmailValid && isInputPwValid && isInputConfirmPwValid && isInputNameValid && isInputPhoneNumberValid 
+  const isInputPhoneNumberValid = validateInputPhoneNumber(
+    form.inputPhoneNumber
+  );
+  const isAllValid =
+    isInputEmailValid &&
+    isInputPwValid &&
+    isInputConfirmPwValid &&
+    isInputNameValid &&
+    isInputPhoneNumberValid;
+
+  // 지역구 이름 가져오기
+  let districts;
+  useEffect(() => {
+    districts = districtsApi.getData();
+  }, []);
 
   // ~
   // post로 유저 데이터 변경
-  const handleUser = (e) => {
+  const onSubmit = () => {
     e.preventDefault();
-    if(isAllValid === true){
-      const onClickModify = async () => {
-        await axios
-          .post('http://localhost8080/api/user', { ...form })
-          .then(() => {
-            alert("유저 정보가 변경되었습니다.");
-          })
-          .catch((err) => {
-            alert("에러가 발생했습니다. 다시 시도해주세요.");
-            console.log(err);
-          });
-      };
-      onClickModify();
+    if (isAllValid === true) {
+      userApi
+        .modify(form)
+        .then((res) => {
+          alert("회원정보 수정 완료!");
+        })
+        .catch((err) => {
+          alert("작업에 실패했습니다. 다시 시도해주세요.");
+        });
     }
-    
   };
 
   return (
@@ -184,15 +194,15 @@ const UserForm = () => {
         <Input
           type="text"
           name="inputName"
-          style={{ fontSize: "25px", marginBottom: '0px'}}
+          style={{ fontSize: "25px", marginBottom: "0px" }}
           onChange={handleState}
           placeholder="이름을 입력해주세요."
         />
-         <div style={{ height: "40px" }}>
+        <div style={{ height: "40px" }}>
           {
             <div
               style={
-                isInputNameValid === true|| form.inputName.length == 0
+                isInputNameValid === true || form.inputName.length == 0
                   ? { display: "none" }
                   : {
                       display: "block",
@@ -216,15 +226,16 @@ const UserForm = () => {
         <Input
           type="text"
           name="inputPhoneNumber"
-          style={{ fontSize: "25px", marginBottom: "0px"}}
+          style={{ fontSize: "25px", marginBottom: "0px" }}
           onChange={handleState}
           placeholder="핸드폰 번호를 입력해주세요."
         />
-         <div style={{ height: "40px" }}>
+        <div style={{ height: "40px" }}>
           {
             <div
               style={
-                isInputPhoneNumberValid === true|| form.inputPhoneNumber.length == 0
+                isInputPhoneNumberValid === true ||
+                form.inputPhoneNumber.length == 0
                   ? { display: "none" }
                   : {
                       display: "block",
@@ -251,162 +262,16 @@ const UserForm = () => {
           onChange={handleState}
           placeholder="거주하는 지역구를 골라주세요."
         >
-          {
-            ["강서구", "양천구", "강남구"].map((elem, i) => (
-              <option key={i}>{elem}</option>
-            ))
-          }
+          {districts.map((elem, i) => (
+            <option key={i}>{elem}</option>
+          ))}
         </Select>
-        <Button style={{marginTop:"40px"}} type="button" onClick={handleUser}>
+        <Button style={{ marginTop: "40px" }} type="button" onClick={onSubmit}>
           변 경 하 기
         </Button>
       </Wrapper>
     </div>
   );
 };
-
-// const Nav = styled.nav`
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: flex-start;
-//   width: 100%;
-//   height: 10%;
-//   background-color: white;
-//   border: 5px solid black;
-//   margin-bottom: 100px;
-// `;
-// const Ul1 = styled.ul`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   flex-direction: row;
-//   justify-content: flex-start;
-//   width: 40%;
-//   height: 100px;
-//   color: white;
-//   list-style-type: none;
-//   font-size: 2em;
-// `;
-// const Ul2 = styled.ul`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   flex-direction: row;
-//   justify-content: flex-start;
-//   width: 100%;
-//   height: 100px;
-//   color: white;
-//   list-style-type: none;
-//   font-size: 2em;
-// `;
-// const Ul3 = styled.ul`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   flex-direction: row;
-//   justify-content: flex-end;
-//   width: 50%;
-//   color: white;
-//   list-style-type: none;
-//   font-size: 2em;
-// `;
-// const Li = styled.li`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   margin-left: 30px;
-//   margin-right: 30px;
-// `;
-// const Link = styled.a`
-//   color: black;
-//   padding: 14px 16px;
-//   text-decoration: none;
-//   text-align: center;
-//   line-height: 1;
-// `;
-// const LogoDiv = styled.div`
-//   box-sizing: border-box;
-//   text-align: left;
-//   width: 130px;
-//   height: 80px;
-//   left: 20px;
-//   top: 31px;
-//   display: inline-block;
-//   align-items: center;
-//   vertical-align: middle;
-//   text-align: center;
-//   border: 1px solid #000000;
-// `;
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-`;
-const H2 = styled.h2`
-  text-align: center;
-  margin-bottom: 90px;
-
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 60px;
-  line-height: 54px;
-
-  color: #000000;
-`;
-const Label = styled.label`
-  width: 700px;
-  margin-bottom: 15px;
-  text-align: left;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 24px;
-
-  color: #000000;
-`;
-
-const Input = styled.input`
-  box-sizing: border-box;
-  margin-bottom: 40px;
-  width: 700px;
-  height: 80px;
-
-  background: #ffffff;
-  border: 1px solid #000000;
-`;
-const Select = styled.select`
-  width: 700px;
-  margin-bottom: 15px;
-  text-align: left;
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 24px;
-  height: 65px;
-
-  color: #000000;
-`;
-const Button = styled.button`
-  width: 560px;
-  height: 70px;
-  margin-bottom: 40px;
-
-  background: rgba(44, 65, 251, 0.73);
-  border-radius: 30px;
-  border-color: rgba(44, 65, 251, 0.73);
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 30px;
-  text-align: center;
-  color: #ffffff;
-`;
 
 export default UserForm;
