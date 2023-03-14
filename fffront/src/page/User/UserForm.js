@@ -1,8 +1,8 @@
 /*eslint-disable*/
-import styled from "styled-components";
 import React, { useState, useEffect } from "react";
-import { usersApi } from "../../api/api";
+import { usersApi, districtsApi } from "../../api/api";
 import { Wrapper, H2, Label, Input, Select, Button, } from './UserForm.styled';
+import { removeToken, getToken, hasToken, getTokenHeader } from "../../utils/tokenFunction"
 
 const UserForm = () => {
   // ~
@@ -71,12 +71,6 @@ const UserForm = () => {
     if (isAllValid === true) {
       usersApi
         .modify(form)
-        .then((res) => {
-          alert("회원정보 수정 완료!");
-        })
-        .catch((err) => {
-          alert("작업에 실패했습니다. 다시 시도해주세요.");
-        });
     }
   };
 
@@ -262,7 +256,7 @@ const UserForm = () => {
           onChange={handleState}
           placeholder="거주하는 지역구를 골라주세요."
         >
-          {districts.map((elem, i) => (
+          {['강서구', '양천구', '강남구'].map((elem, i) => (
             <option key={i}>{elem}</option>
           ))}
         </Select>

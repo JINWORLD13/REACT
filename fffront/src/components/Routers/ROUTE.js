@@ -31,11 +31,11 @@ export const ROUTE = {
     link: "/RegisterForm",
     element: RegisterForm,
   },
-  USERFORM: {
-    path: "/UserForm",
-    link: "/UserForm",
-    element: UserForm,
-  },
+  // USERFORM: {
+  //   path: "/UserForm",
+  //   link: "/UserForm",
+  //   element: UserForm,
+  // },
 };
 
 export const ROUTE_ARR = Object.values(ROUTE);

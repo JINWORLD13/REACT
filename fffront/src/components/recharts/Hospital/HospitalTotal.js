@@ -20,6 +20,7 @@ for (let key in hospitalsData) {
 }
 hospitalsHigh.sort((b, a) => a.병원수 - b.병원수)
 hospitalsHigh = hospitalsHigh.slice(0, 5);
+console.log(HospitalHigh)
 
 export default function HospitalHigh() {
   return (
@@ -34,12 +35,12 @@ export default function HospitalHigh() {
           bottom: 5
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
+        <CartesianGrid strokeDasharray="2 1" />
         <XAxis dataKey="name" stroke = "black"/>
         <YAxis dataKey="병원수"/>
         <Tooltip />
         <Legend />
-        <Bar dataKey="병원수" fill="Purple" />
+        <Bar dataKey="병원수" fill="Purple" barsize = {10}/>
       </BarChart>
   );
 }
