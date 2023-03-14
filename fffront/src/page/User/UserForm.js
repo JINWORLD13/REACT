@@ -63,7 +63,7 @@ const UserForm = () => {
     isInputNameValid &&
     isInputPhoneNumberValid;
 
-  // 지역구 이름 가져오기
+  // ! 지역구 이름 가져오기
   let districts;
   useEffect(() => {
     districts = districtsApi.getData();
@@ -118,6 +118,7 @@ const UserForm = () => {
         <Label htmlFor="inputEmail">이메일</Label>
         <Input
           type="text"
+          id="inputEmail"
           name="inputEmail"
           style={{ fontSize: "25px", marginBottom: "0px" }}
           onChange={handleState}
@@ -150,6 +151,7 @@ const UserForm = () => {
         <Label htmlFor="inputPw">비밀번호</Label>
         <Input
           type="text"
+          id="inputPw"
           name="inputPw"
           style={{ fontSize: "25px" }}
           onChange={handleState}
@@ -158,6 +160,7 @@ const UserForm = () => {
         <Label htmlFor="inputConfirmPw">비밀번호 재입력</Label>
         <Input
           type="text"
+          id="inputConfirmPw"
           name="inputConfirmPw"
           style={{ fontSize: "25px", marginBottom: "0px" }}
           onChange={handleState}
@@ -191,6 +194,7 @@ const UserForm = () => {
         <Label htmlFor="inputName">이름</Label>
         <Input
           type="text"
+          id="inputName"
           name="inputName"
           style={{ fontSize: "25px", marginBottom: "0px" }}
           onChange={handleState}
@@ -223,6 +227,7 @@ const UserForm = () => {
         <Label htmlFor="inputPhoneNumber">핸드폰 번호</Label>
         <Input
           type="text"
+          id="inputPhoneNumber"
           name="inputPhoneNumber"
           style={{ fontSize: "25px", marginBottom: "0px" }}
           onChange={handleState}
@@ -255,6 +260,7 @@ const UserForm = () => {
         </div>
         <Label htmlFor="selectedDistrict">주소</Label>
         <Select
+          id="selectedDistrict"
           name="selectedDistrict"
           style={{ fontSize: "25px" }}
           onChange={handleState}

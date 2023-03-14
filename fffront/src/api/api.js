@@ -47,8 +47,8 @@ export const usersApi = {
     //   // config.headers.common["Refresh-Token"] = refreshToken;
     //   return config;
     // });
-
-    await apiWithToken
+    const token = getToken();
+    await apiWithToken(token)
       .post("/user", {
         ...form,
       })

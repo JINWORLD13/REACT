@@ -88,6 +88,7 @@ function LoginForm() {
         <Label htmlFor="inputEmail">이메일</Label>
         <Input
           type="text"
+          id="inputEmail"
           name="inputEmail"
           style={{ fontSize: "25px" }}
           onChange={handleState}
@@ -96,6 +97,7 @@ function LoginForm() {
         <Label htmlFor="inputPw">비밀번호</Label>
         <Input
           type="text"
+          id="inputPw"
           name="inputPw"
           style={{ fontSize: "25px" }}
           onChange={handleState}

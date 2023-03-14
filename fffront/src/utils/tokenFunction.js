@@ -1,5 +1,3 @@
-import { apiWithToken } from "../api/api";
-
 // 로컬스토리지에서 access 및 refresh 토큰을 가져옴.
 export const accessToken = getToken().accessToken;
 export const refreshToken = getToken().refreshToken;
@@ -29,20 +27,6 @@ export const getToken = () => {
 
 // 토큰이 있는지 여부를 확인하는 함수
 export const hasToken = () => {
-  return !!getToken();
+  return !!getToken(); // "!!" 기호는 어떤 값을 불리언 값으로 변환하는 축약형. getToken() 반환값이 null이면 falsy값이니 false가 나옴.
 };
 
-// 토큰을 헤더에 담아 서버에 요청하는 작업 <- 뭐때문에?????????
-export const sendTokenToServer = (token) => {
-  // 서버로 요청 보내기
-  apiWithToken(token)
-    .get("/api/data")
-    .then((res) => {
-      // 서버에서 응답 받은 후 처리할 로직 작성
-      console.log(res.data);
-    })
-    .catch((error) => {
-      // 에러 처리 로직 작성
-      console.error(error);
-    });
-};

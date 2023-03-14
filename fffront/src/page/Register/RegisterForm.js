@@ -29,7 +29,7 @@ const RegisterForm = () => {
     }));
   };
 
-  // 지역구 이름 가져오기
+  // ! 지역구 이름 가져오기
   let districts;
   useEffect(() => {
     districts = districtsApi.getData();
@@ -116,9 +116,10 @@ const RegisterForm = () => {
 
       <Wrapper>
         <H2>회 원 가 입</H2>
-        <Label htmlFor="input_email">이메일</Label>
+        <Label htmlFor="inputEmail">이메일</Label>
         <Input
           type="text"
+          id="inputEmail"
           name="inputEmail"
           style={{ fontSize: "25px", marginBottom: "0px" }}
           onChange={handleState}
@@ -148,9 +149,10 @@ const RegisterForm = () => {
             </div>
           }
         </div>
-        <Label htmlFor="input_pw">비밀번호</Label>
+        <Label htmlFor="inputPw">비밀번호</Label>
         <Input
           type="text"
+          id="inputPw"
           name="inputPw"
           style={{ fontSize: "25px" }}
           onChange={handleState}
@@ -159,6 +161,7 @@ const RegisterForm = () => {
         <Label htmlFor="inputConfirmPw">비밀번호 재입력</Label>
         <Input
           type="text"
+          id="inputConfirmPw"
           name="inputConfirmPw"
           style={{ fontSize: "25px", marginBottom: "0px" }}
           onChange={handleState}
@@ -192,6 +195,7 @@ const RegisterForm = () => {
         <Label htmlFor="inputName">이름</Label>
         <Input
           type="text"
+          id="inputName"
           name="inputName"
           style={{ fontSize: "25px", marginBottom: "0px" }}
           onChange={handleState}
@@ -224,6 +228,7 @@ const RegisterForm = () => {
         <Label htmlFor="inputPhoneNumber">핸드폰 번호</Label>
         <Input
           type="text"
+          id="inputPhoneNumber"
           name="inputPhoneNumber"
           style={{ fontSize: "25px", marginBottom: "0px" }}
           onChange={handleState}
@@ -256,6 +261,7 @@ const RegisterForm = () => {
         </div>
         <Label htmlFor="selectedDistrict">주소</Label>
         <Select
+          id="selectedDistrict"
           name="selectedDistrict"
           style={{ fontSize: "25px" }}
           onChange={handleState}
