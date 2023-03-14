@@ -12,7 +12,7 @@ export const ROUTE = {
     element: Home,
   },
   CULTURAL_ENV: {
-    path: "/CulturalEnv/:curtureId",
+    path: "/CulturalEnv/",
     link: "/CulturalEnv",
     element: CulturalEnv,
   },

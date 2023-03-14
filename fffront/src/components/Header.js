@@ -4,13 +4,11 @@ import axios from "axios";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 // 20220314 이효상 ROUTE import
-import { ROUTE, ROUTE_ARR } from "../data/route/route";
+import { ROUTE, ROUTE_ARR } from "../../src/components/Routers/ROUTE";
 
 
 const Header = () => {
-  const location = useLocation();
-  const pathname = location.pathname;
-  const route = ROUTE_ARR.find((el) => el.path === location.pathname);
+  ROUTE_ARR.find((el) => el.path === location.pathname);
 
   return (
     <div>
@@ -20,11 +18,11 @@ const Header = () => {
         </LogoStyled>
         <NavStyled>
           <ButtonStyled>
-              <NavLink to='/Happiness'>행복 지수</NavLink>
-              <NavLink to='/CulturalEnv'>문화 환경</NavLink>
-              <NavLink to ='/LoginForm'>로그인</NavLink>
-              <NavLink to ='/RegisterForm'>회원가입</NavLink>
-              <NavLink to ='/UserForm'>마이페이지</NavLink>
+              <NavLink to={ROUTE.HAPPINESS.link}>행복 지수</NavLink>
+              <NavLink to={ROUTE.CULTURAL_ENV.link}>문화 환경</NavLink>
+              <NavLink to ={ROUTE.LOGINFORM.link}>로그인</NavLink>
+              <NavLink to ={ROUTE.REGISTERFORM.link}>회원가입</NavLink>
+              <NavLink to ={ROUTE.USERFORM.link}>마이페이지</NavLink>
           </ButtonStyled>
         </NavStyled>
       </Container>

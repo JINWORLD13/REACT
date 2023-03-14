@@ -1,14 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 // 사용할 컴포넌트 import
-import ROUTE from "../../components/Routers"
-// import Header from '../../components/Header.js';
-// import CulturalEnv from '../../components/classify/CulturalEnv';
-// import Happiness from '../../components/classify/Happiness';
-// import LoginForm from "../Login/LoginForm.js";
-// import RegisterForm from "../Register/RegisterForm.js";
-// import UserForm from "../../page/User/UserForm";
-// import Home from '../Home.js';
+import { ROUTE_ARR } from "../../components/Routers/ROUTE"
+import Header from '../../components/Header.js';
 
 const Main = () => {
   
@@ -17,7 +11,14 @@ const Main = () => {
       <Router>
         <Header />
         <div>
-        <ROUTE />
+        <Routes>
+        {ROUTE_ARR.map((route, index) => {
+          return (
+            <Route path={route.path} element={<route.element />} key={index} />
+          );
+        })}
+      </Routes>
+
         </div>
       </Router>
     </div>
