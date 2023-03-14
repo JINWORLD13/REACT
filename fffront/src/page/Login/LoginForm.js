@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usersApi } from "../../api/api";
-import { Wrapper, H2, Label, Input, Button } from './LoginForm.styled';
+import { Wrapper, H2, Label, Input, Button } from "./LoginForm.styled";
 
 function LoginForm() {
   // ~
@@ -44,8 +44,7 @@ function LoginForm() {
   const onSubmit = () => {
     e.preventDefault();
     if (isAllValid === true) {
-      usersApi
-        .logIn(form)
+      usersApi.logIn(form);
     }
   };
 

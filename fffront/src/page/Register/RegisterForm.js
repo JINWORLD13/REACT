@@ -1,7 +1,14 @@
 /*eslint-disable*/
 import React, { useState, useEffect } from "react";
 import { districtsApi, usersApi } from "../../api/api";
-import { Wrapper, H2, Label, Input, Select, Button } from './ReigsterForm.styled';
+import {
+  Wrapper,
+  H2,
+  Label,
+  Input,
+  Select,
+  Button,
+} from "./ReigsterForm.styled";
 
 const RegisterForm = () => {
   // ~
@@ -68,8 +75,7 @@ const RegisterForm = () => {
   const onSubmit = () => {
     e.preventDefault();
     if (isAllValid === true) {
-      usersApi
-        .signUp(form)
+      usersApi.signUp(form);
     }
   };
 
@@ -255,7 +261,7 @@ const RegisterForm = () => {
           onChange={handleState}
           placeholder="거주하는 지역구를 골라주세요."
         >
-          {['강서구', '양천구', '강남구'].map((elem, i) => (
+          {["강서구", "양천구", "강남구"].map((elem, i) => (
             <option key={i}>{elem}</option>
           ))}
         </Select>

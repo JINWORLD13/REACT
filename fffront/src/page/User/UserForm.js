@@ -1,8 +1,13 @@
 /*eslint-disable*/
 import React, { useState, useEffect } from "react";
 import { usersApi, districtsApi } from "../../api/api";
-import { Wrapper, H2, Label, Input, Select, Button, } from './UserForm.styled';
-import { removeToken, getToken, hasToken, getTokenHeader } from "../../utils/tokenFunction"
+import { Wrapper, H2, Label, Input, Select, Button } from "./UserForm.styled";
+import {
+  removeToken,
+  getToken,
+  hasToken,
+  getTokenHeader,
+} from "../../utils/tokenFunction";
 
 const UserForm = () => {
   // ~
@@ -69,8 +74,7 @@ const UserForm = () => {
   const onSubmit = () => {
     e.preventDefault();
     if (isAllValid === true) {
-      usersApi
-        .modify(form)
+      usersApi.modify(form);
     }
   };
 
@@ -256,7 +260,7 @@ const UserForm = () => {
           onChange={handleState}
           placeholder="거주하는 지역구를 골라주세요."
         >
-          {['강서구', '양천구', '강남구'].map((elem, i) => (
+          {["강서구", "양천구", "강남구"].map((elem, i) => (
             <option key={i}>{elem}</option>
           ))}
         </Select>

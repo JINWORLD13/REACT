@@ -1,5 +1,8 @@
-import axios from "axios";
 import { apiWithToken } from "../api/api";
+
+// 로컬스토리지에서 access 및 refresh 토큰을 가져옴.
+export const accessToken = getToken().accessToken;
+export const refreshToken = getToken().refreshToken;
 
 // 로그인 후 토큰을 로컬스토리지에 저장하는 함수
 export const setToken = (token) => {
