@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import styled from "styled-components";
 import React, { useState, useEffect } from "react";
-import { userApi } from "../../api/api";
+import { usersApi } from "../../api/api";
 import { Wrapper, H2, Label, Input, Select, Button, } from './UserForm.styled';
 
 const UserForm = () => {
@@ -69,7 +69,7 @@ const UserForm = () => {
   const onSubmit = () => {
     e.preventDefault();
     if (isAllValid === true) {
-      userApi
+      usersApi
         .modify(form)
         .then((res) => {
           alert("회원정보 수정 완료!");

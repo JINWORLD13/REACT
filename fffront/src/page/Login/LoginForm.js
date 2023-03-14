@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { userApi } from "../../api/api";
+import { usersApi } from "../../api/api";
 import { Wrapper, H2, Label, Input, Button } from './LoginForm.styled';
 
 function LoginForm() {
@@ -44,7 +44,7 @@ function LoginForm() {
   const onSubmit = () => {
     e.preventDefault();
     if (isAllValid === true) {
-      userApi
+      usersApi
         .logIn(form)
         .then((res) => {
           alert("로그인 성공!");

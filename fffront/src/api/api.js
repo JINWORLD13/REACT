@@ -24,7 +24,7 @@ const access_token = localStorage.getItem("token");
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// &
 
 // 위에서 설정한 api에 method를 포함시켜서 간결하게 호출할 수 있게 된다.
-export const userApi = {
+export const usersApi = {
   signUp: async (form) => {
     // form은 obj여야 함.
     return await api.post("/register", {
@@ -62,6 +62,14 @@ export const userApi = {
 export const districtsApi = {
   getData: async () => {
     return await api.get("/districts");
+  },
+};
+
+export const hospitalsApi = {
+  getData: async (url) => {
+    await fetch.get(`${url}`)
+        .then(data => {return data.json()})
+        .catch(e => alert("병원 정보를 불러오지 못했습니다."));
   },
 };
 

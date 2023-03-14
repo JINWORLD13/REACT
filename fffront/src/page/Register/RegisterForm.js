@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React, { useState, useEffect } from "react";
-import { districtsApi, userApi } from "../../api/api";
+import { districtsApi, usersApi } from "../../api/api";
 import { Wrapper, H2, Label, Input, Select, Button, } from './ReigsterForm.styled';
 
 const RegisterForm = () => {
@@ -68,7 +68,7 @@ const RegisterForm = () => {
   const onSubmit = () => {
     e.preventDefault();
     if (isAllValid === true) {
-      userApi
+      usersApi
         .signUp(form)
         .then((res) => {
           alert("회원가입 완료!");
