@@ -11,7 +11,7 @@ export const removeToken = () => {
 
 // 로그인 상태 확인을 위해 로컬스토리지에서 토큰을 OBJECT화 해서 가져오는 함수
 export const getToken = () => {
-  return JSON.parse(localStorage.getItem("token"));
+  return localStorage.getItem("token");
 };
 
 // 토큰이 있는지 여부를 확인하는 함수

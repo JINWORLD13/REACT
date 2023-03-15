@@ -38,20 +38,19 @@ const RegisterForm = () => {
   // ~
   // 1단계 : 유효성 검사(형식 체크)
   const validateInputEmail = (inputEmail) => {
-    const emailRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/; // ! 유효성 검사 백엔드랑 상의하기
+    const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/i ; 
     return emailRegex.test(inputEmail);
   };
   const validateInputPw = (inputPw) => {
-    const pwRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{10,25}$/; // ! 유효성 검사 백엔드랑 상의하기
+    const pwRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/;
     return pwRegex.test(inputPw);
   };
   const validateInputName = (inputName) => {
-    const nameRegex = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;// ! 유효성 검사 백엔드랑 상의하기
+    const nameRegex = /^[가-힣]{2,}$/u;
     return nameRegex.test(inputName);
   };
   const validateInputPhoneNumber = (inputPhoneNumber) => {
-    const phoneNumberRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/; // ! 유효성 검사 백엔드랑 상의하기
+    const phoneNumberRegex = /^\d{11}$/ ;
     return phoneNumberRegex.test(inputPhoneNumber);
   };
 
@@ -74,10 +73,17 @@ const RegisterForm = () => {
   // post로 변경된 유저 데이터 등록
   const onSubmit = async (e) => {
     e.preventDefault();
-    // ! 유효성 검사 백엔드랑 상의하기
-    // if (isAllValid === true) {
-    //   await usersApi.signUp(form);
-    // }
+    if (isInputEmailValid === false){
+      alert('올바른 이메일을 입력해주세요.')
+    } else if (isInputPwValid === false){
+      alert('영문 대소문자, 숫자를 적어도 1개씩 포함 8자 이상 입력해주세요.')
+    } else if (isInputConfirmPwValid === false){
+      alert('재확인 비밀번호를 알맞게 입력해주세요.')
+    } else if (isInputNameValid === false){
+      alert('두 글자 이상의 한글로 이름을 입력해주세요.')
+    } else if (isInputPhoneNumberValid === false){
+      alert('11자리의 숫자로 핸드폰 번호를 입력해주세요.')
+    }
     await usersApi.signUp(form);
   };
 
@@ -124,10 +130,34 @@ const RegisterForm = () => {
           type="text"
           id="inputPw"
           name="inputPw"
-          style={{ fontSize: "25px" }}
+          style={{ fontSize: "25px", marginBottom: "0px" }}
           onChange={handleState}
           placeholder="비밀번호를 입력해주세요."
         />
+        <div style={{ height: "40px" }}>
+          {
+            <div
+              style={
+                isInputPwValid === true || form.inputPw.length == 0
+                  ? { display: "none" }
+                  : {
+                      display: "block",
+                      marginTop: "0px",
+                      width: "700px",
+                      textAlign: "left",
+                      fontFamily: "Inter",
+                      fontStyle: "normal",
+                      fontWeight: 400,
+                      fontSize: "25px",
+                      lineHeight: "24px",
+                      color: "red",
+                    }
+              }
+            >
+              영문 대소문자, 숫자 포함 8자 이상 입력해주세요.
+            </div>
+          }
+        </div>
         <Label htmlFor="inputConfirmPw">비밀번호 재입력</Label>
         <Input
           type="text"
@@ -236,7 +266,9 @@ const RegisterForm = () => {
           style={{ fontSize: "25px" }}
           placeholder="거주하는 지역구를 골라주세요."
           onChange={handleState}
+          required
         >
+          <option value="">선택해주세요</option>
           {["강서구", "양천구", "강남구"].map((elem, i) => (
             <option key={i} >{elem}</option>
           ))}

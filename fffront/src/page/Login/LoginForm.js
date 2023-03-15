@@ -21,34 +21,12 @@ function LoginForm() {
       [name]: value, // 표현법이 신기(대괄호 붙임)
     }));
   };
-
-  //~
-  // 유효성 검사(형식 체크)
-  const validateInputEmail = (inputEmail) => {
-    const emailRegex =
-    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ ;  // ! 유효성 검사 백엔드랑 상의하기
-    return emailRegex.test(inputEmail);
-  };
-  const validateInputPw = (inputPw) => {
-    const pwRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm; // ! 유효성 검사 백엔드랑 상의하기
-    return pwRegex.test(inputPw);
-  };
-
-  // 유효성 검사 함수로 정리하기(true?)
-  const isInputEmailValid = validateInputEmail(form.inputEmail);
-  const isInputPwValid = validateInputPw(form.inputPw);
-  const isAllValid = isInputEmailValid && isInputPwValid;
-
+  
   // ~
   // login 버튼 클릭 이벤트 (백에서 생성된 토큰을 프론트에서 로컬스토리지에 저장)
   const onSubmit = async (e) => {
     e.preventDefault(); // 리액트 다시 실행해도, 즉 다시 리렌더되어도 입력한 값, 변경해준 값들은 새로고침 안되도록 함.
-    // ! isAllValid는 유효성 검사 확정후
-    // if (isAllValid === true) {
-    //   await usersApi.logIn(form);
-    // }
     await usersApi.logIn(form);
-    
   };
 
   return (
