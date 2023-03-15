@@ -41,10 +41,10 @@ function LoginForm() {
 
   // ~
   // login 버튼 클릭 이벤트 (백에서 생성된 토큰을 프론트에서 로컬스토리지에 저장)
-  const onSubmit = () => {
-    e.preventDefault();
+  const onSubmit = async (e) => {
+    // e.preventDefault();
     if (isAllValid === true) {
-      usersApi.logIn(form);
+      await usersApi.logIn(form);
     }
   };
 
@@ -83,38 +83,40 @@ function LoginForm() {
         </Ul3>
       </Nav> */}
 
-      <Wrapper>
-        <H2>Far-Away Home</H2>
-        <Label htmlFor="inputEmail">이메일</Label>
-        <Input
-          type="text"
-          id="inputEmail"
-          name="inputEmail"
-          style={{ fontSize: "25px" }}
-          onChange={handleState}
-          placeholder="이메일을 입력해주세요."
-        />
-        <Label htmlFor="inputPw">비밀번호</Label>
-        <Input
-          type="text"
-          id="inputPw"
-          name="inputPw"
-          style={{ fontSize: "25px" }}
-          onChange={handleState}
-          placeholder="비밀번호를 입력해주세요."
-        />
-        <Button style={{ marginTop: "40px" }} type="button" onClick={onSubmit}>
-          로 그 인
-        </Button>
-        <Button
-          type="button"
-          onClick={() => {
-            navigate("/register");
-          }}
-        >
-          회 원 가 입
-        </Button>
-      </Wrapper>
+      <form onSubmit={onSubmit}>
+        {/* <Wrapper> */}
+          <H2>Far-Away Home</H2>
+          <Label htmlFor="inputEmail">이메일</Label>
+          <Input
+            type="text"
+            id="inputEmail"
+            name="inputEmail"
+            style={{ fontSize: "25px" }}
+            onChange={handleState}
+            placeholder="이메일을 입력해주세요."
+          />
+          <Label htmlFor="inputPw">비밀번호</Label>
+          <Input
+            type="password"
+            id="inputPw"
+            name="inputPw"
+            style={{ fontSize: "25px" }}
+            onChange={handleState}
+            placeholder="비밀번호를 입력해주세요."
+          />
+          <Button style={{ marginTop: "40px" }} type="submit">
+            로 그 인
+          </Button>
+          <Button
+            type="button"
+            onClick={() => {
+              navigate("/RegisterForm");
+            }}
+          >
+            회 원 가 입
+          </Button>
+        {/* </Wrapper> */}
+      </form>
     </div>
   );
 }
