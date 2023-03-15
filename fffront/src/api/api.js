@@ -55,8 +55,8 @@ export const usersApi = {
     await api
       .post("/login", {...form})
       .then((data) => {
-        const token = {...data}
-        setToken(JSON.stringify(token)); // access 및 refresh 동시에 obj(token)로 감싸여져 들어 있음.
+        const token = {...data.data}
+        setToken(token); // access 및 refresh 동시에 obj(token)로 감싸여져 들어 있음. (일부로 값이 보이니까 stringify 안함.)
         alert("로그인에 성공했습니다.");
       })
       .catch((err) => alert("로그인에 실패했습니다. 다시 시도해주세요."));
