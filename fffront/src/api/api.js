@@ -12,7 +12,7 @@ export const api = axios.create({
 });
 
 export const apiWithToken = (token) => {
-  axios.create({
+  return axios.create({
     baseURL: "http://localhost:8080",
     //쿼리로 넘길 키들을 headers 객체에 키밸류로 순서대로 넣어준다.
     headers: {
@@ -47,7 +47,8 @@ export const usersApi = {
     //   return config;
     // });
     const token = getToken();
-    await apiWithToken(token)
+    const instance = await apiWithToken(token);
+    await instance
       .post("/user", {
         ...form,
       })
@@ -59,7 +60,7 @@ export const usersApi = {
 
   logIn: async (form) => {
     await api
-      .post("/login", { ...form })
+      .post("/login", {...form})
       .then((data) => {
         setToken(data.token);
         alert("로그인에 성공했습니다.");

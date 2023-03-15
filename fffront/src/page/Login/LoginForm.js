@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usersApi } from "../../api/api";
-import { Wrapper, H2, Label, Input, Button } from "./LoginForm.styled";
+import { Form, Wrapper, H2, Label, Input, Button } from "./LoginForm.styled";
 
 function LoginForm() {
   // ~
@@ -42,9 +42,10 @@ function LoginForm() {
   // ~
   // login 버튼 클릭 이벤트 (백에서 생성된 토큰을 프론트에서 로컬스토리지에 저장)
   const onSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault(); // 리액트 다시 실행해도, 즉 다시 리렌더되어도 입력한 값, 변경해준 값들은 새로고침 안되도록 함.
+    const { inputEmail, inputPw } = form;
     if (isAllValid === true) {
-      await usersApi.logIn(form);
+      await usersApi.logIn({ inputEmail, inputPw });
     }
   };
 
@@ -83,12 +84,11 @@ function LoginForm() {
         </Ul3>
       </Nav> */}
 
-      <form onSubmit={onSubmit}>
-        {/* <Wrapper> */}
+        <Form onSubmit={onSubmit}>
           <H2>Far-Away Home</H2>
           <Label htmlFor="inputEmail">이메일</Label>
           <Input
-            type="text"
+            type="email"
             id="inputEmail"
             name="inputEmail"
             style={{ fontSize: "25px" }}
@@ -115,8 +115,7 @@ function LoginForm() {
           >
             회 원 가 입
           </Button>
-        {/* </Wrapper> */}
-      </form>
+        </Form>
     </div>
   );
 }

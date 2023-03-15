@@ -27,5 +27,5 @@ export const hasToken = () => {
 };
 
 // 로컬스토리지에서 access 및 refresh 토큰을 가져옴.
-export const accessToken = getToken().accessToken;
-export const refreshToken = getToken().refreshToken;
+// export const accessToken = getToken().accessToken;
+// export const refreshToken = getToken().refreshToken;
