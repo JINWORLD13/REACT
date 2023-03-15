@@ -2,12 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { usersApi, districtsApi } from "../../api/api";
 import { Form, H2, Label, Input, Select, Button } from "./UserForm.styled";
-import {
-  removeToken,
-  getToken,
-  hasToken,
-  getTokenHeader,
-} from "../../utils/tokenFunction";
 import { ROUTE } from "../../components/Routers/ROUTE";
 import LoginForm from "../Login/LoginForm";
 
@@ -33,7 +27,7 @@ const UserForm = () => {
   // ~
   // 1단계 : 유효성 검사(형식 체크)
   const validateInputEmail = (inputEmail) => {
-    const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/i ; 
+    const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/i;
     return emailRegex.test(inputEmail);
   };
   const validateInputPw = (inputPw) => {
@@ -45,7 +39,7 @@ const UserForm = () => {
     return nameRegex.test(inputName);
   };
   const validateInputPhoneNumber = (inputPhoneNumber) => {
-    const phoneNumberRegex = /^\d{11}$/ ;
+    const phoneNumberRegex = /^\d{11}$/;
     return phoneNumberRegex.test(inputPhoneNumber);
   };
 
@@ -76,21 +70,21 @@ const UserForm = () => {
     e.preventDefault();
     if (isAllValid === true) {
       await usersApi.modify(form);
-    } else if (isInputEmailValid === false){
-      alert('올바른 이메일을 입력해주세요.')
-    } else if (isInputPwValid === false){
-      alert('영문 대소문자, 숫자를 적어도 1개씩 포함 8자 이상 입력해주세요.')
-    } else if (isInputConfirmPwValid === false){
-      alert('재확인 비밀번호를 알맞게 입력해주세요.')
-    } else if (isInputNameValid === false){
-      alert('두 글자 이상의 한글로 이름을 입력해주세요.')
-    } else if (isInputPhoneNumberValid === false){
-      alert('11자리의 숫자로 핸드폰 번호를 입력해주세요.')
+    } else if (isInputEmailValid === false) {
+      alert("올바른 이메일을 입력해주세요.");
+    } else if (isInputPwValid === false) {
+      alert("영문 대소문자, 숫자를 적어도 1개씩 포함 8자 이상 입력해주세요.");
+    } else if (isInputConfirmPwValid === false) {
+      alert("재확인 비밀번호를 알맞게 입력해주세요.");
+    } else if (isInputNameValid === false) {
+      alert("두 글자 이상의 한글로 이름을 입력해주세요.");
+    } else if (isInputPhoneNumberValid === false) {
+      alert("11자리의 숫자로 핸드폰 번호를 입력해주세요.");
     }
   };
 
   // 토큰 여부 검사
-  ROUTE.USERFORM.withToken
+  if (ROUTE.USERFORM.withToken === false) {return <LoginForm />};
 
   return (
     <div>

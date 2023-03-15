@@ -39,10 +39,10 @@ export const usersApi = {
       .catch((err) => alert("회원가입에 실패했습니다. 다시 시도해주세요."));
   },
   modify: async (form) => {
-    const token = getToken();
-    const instance = await apiWithToken(token.accessToken);
+    const token = JSON.parse(getToken());
+    const instance = await apiWithToken(token?.accessToken);
     await instance
-      .post("/user", {
+      .put("/user", {
         ...form,
       })
       .then((res) => {
@@ -56,7 +56,7 @@ export const usersApi = {
       .post("/login", {...form})
       .then((data) => {
         const token = {...data}
-        setToken(token); // access 및 refresh 동시에 obj(token)로 감싸여져 들어 있음.
+        setToken(JSON.stringify(token)); // access 및 refresh 동시에 obj(token)로 감싸여져 들어 있음.
         alert("로그인에 성공했습니다.");
       })
       .catch((err) => alert("로그인에 실패했습니다. 다시 시도해주세요."));

@@ -14,11 +14,12 @@ export const getToken = () => {
   return localStorage.getItem("token");
 };
 
-// 토큰이 있는지 여부를 확인하는 함수
-export const hasToken = () => {
-  return !!getToken().accessToken; // "!" 기호는 어떤 값을 불리언 값으로 변환하는 축약형. getToken() 반환값이 null이면 falsy값이니 false가 나옴.
-};
+// 액세스 토큰이 있는지 여부를 확인하는 함수
+export const hasAccessToken = () => {
+  const token = JSON.parse(getToken());
+  return token?.accessToken != null // token이 없으면 false, 있으면 true
+}
 
 // 로컬스토리지에서 access 및 refresh 토큰을 가져옴.
-export const accessToken = getToken().accessToken ?? null;
-export const refreshToken = getToken().refreshToken ?? null;
+export const accessToken = JSON.parse(getToken())?.accessToken ?? null;
+export const refreshToken = JSON.parse(getToken())?.refreshToken ?? null;
