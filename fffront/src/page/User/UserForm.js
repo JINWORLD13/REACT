@@ -8,6 +8,8 @@ import {
   hasToken,
   getTokenHeader,
 } from "../../utils/tokenFunction";
+import { ROUTE } from "../../components/Routers/ROUTE"
+import LoginForm from "../Login/LoginForm";
 
 const UserForm = () => {
   // ~
@@ -77,6 +79,9 @@ const UserForm = () => {
       usersApi.modify(form);
     }
   };
+
+  // 토큰 여부 검사사
+  if(ROUTE.USERFORM.withToken === false) return <LoginForm/>
 
   return (
     <div>

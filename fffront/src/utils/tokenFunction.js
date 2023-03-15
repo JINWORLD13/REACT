@@ -1,7 +1,3 @@
-// 로컬스토리지에서 access 및 refresh 토큰을 가져옴.
-export const accessToken = getToken().accessToken;
-export const refreshToken = getToken().refreshToken;
-
 // 로그인 후 토큰을 로컬스토리지에 저장하는 함수
 export const setToken = (token) => {
   // ! accessToken인지 아닌지 혹은 refresh도 한꺼번에?
@@ -27,6 +23,9 @@ export const getToken = () => {
 
 // 토큰이 있는지 여부를 확인하는 함수
 export const hasToken = () => {
-  return !!getToken(); // "!!" 기호는 어떤 값을 불리언 값으로 변환하는 축약형. getToken() 반환값이 null이면 falsy값이니 false가 나옴.
+  return !getToken(); // "!" 기호는 어떤 값을 불리언 값으로 변환하는 축약형. getToken() 반환값이 null이면 falsy값이니 false가 나옴.
 };
 
+// 로컬스토리지에서 access 및 refresh 토큰을 가져옴.
+export const accessToken = getToken().accessToken;
+export const refreshToken = getToken().refreshToken;

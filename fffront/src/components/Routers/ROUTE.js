@@ -4,6 +4,7 @@ import Happiness from "../../components/classify/Happiness";
 import LoginForm from "../../page/Login/LoginForm";
 import RegisterForm from "../../page/Register/RegisterForm";
 import UserForm from "../../page/User/UserForm";
+import { hasToken } from "../../utils/tokenFunction";
 
 export const ROUTE = {
   HOME: {
@@ -31,11 +32,12 @@ export const ROUTE = {
     link: "/RegisterForm",
     element: RegisterForm,
   },
-  // USERFORM: {
-  //   path: "/UserForm",
-  //   link: "/UserForm",
-  //   element: UserForm,
-  // },
+  USERFORM: {
+    path: "/UserForm",
+    link: "/UserForm",
+    element: UserForm,
+    withToken: hasToken()
+  },
 };
 
 export const ROUTE_ARR = Object.values(ROUTE);

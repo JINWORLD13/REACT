@@ -22,7 +22,7 @@ const Header = () => {
               <NavLink to={ROUTE.CULTURAL_ENV.link}>문화 환경</NavLink>
               <NavLink to ={ROUTE.LOGINFORM.link}>로그인</NavLink>
               <NavLink to ={ROUTE.REGISTERFORM.link}>회원가입</NavLink>
-              <NavLink to ="/LoginForm">마이페이지</NavLink>
+              <NavLink to ={ROUTE.USERFORM.link}>마이페이지</NavLink>
           </ButtonStyled>
         </NavStyled>
       </Container>
