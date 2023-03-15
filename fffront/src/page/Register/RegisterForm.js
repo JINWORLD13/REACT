@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { districtsApi, usersApi } from "../../api/api";
 import {
-  Wrapper,
+  Form,
   H2,
   Label,
   Input,
@@ -39,19 +39,19 @@ const RegisterForm = () => {
   // 1단계 : 유효성 검사(형식 체크)
   const validateInputEmail = (inputEmail) => {
     const emailRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/; // ! 유효성 검사 백엔드랑 상의하기
     return emailRegex.test(inputEmail);
   };
   const validateInputPw = (inputPw) => {
-    const pwRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{10,25}$/;
+    const pwRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{10,25}$/; // ! 유효성 검사 백엔드랑 상의하기
     return pwRegex.test(inputPw);
   };
   const validateInputName = (inputName) => {
-    const nameRegex = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
+    const nameRegex = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;// ! 유효성 검사 백엔드랑 상의하기
     return nameRegex.test(inputName);
   };
   const validateInputPhoneNumber = (inputPhoneNumber) => {
-    const phoneNumberRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+    const phoneNumberRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/; // ! 유효성 검사 백엔드랑 상의하기
     return phoneNumberRegex.test(inputPhoneNumber);
   };
 
@@ -72,211 +72,180 @@ const RegisterForm = () => {
 
   // ~
   // post로 변경된 유저 데이터 등록
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if (isAllValid === true) {
-      usersApi.signUp(form);
-    }
+    // ! 유효성 검사 백엔드랑 상의하기
+    // if (isAllValid === true) {
+    //   await usersApi.signUp(form);
+    // }
+    await usersApi.signUp(form);
   };
 
   return (
     <div>
-      {/* <Nav>
-        <Ul1>
-          <LogoDiv>
-            <Link href="/">Logo</Link>
-          </LogoDiv>
-        </Ul1>
-        <Ul2>
-          <Li>
-            <Link href="/happiness">행복지수</Link>
-          </Li>
-          <Li>
-            <Link href="/environment">문화 환경 만족도</Link>
-          </Li>
-          <Li>
-            <Link href="/price">가격 비교</Link>
-          </Li>
-          <Li>
-            <Link href="/detail">아무개</Link>
-          </Li>
-        </Ul2>
-        <Ul3>
-          <Li>
-            <Link href="/mypage">마이페이지</Link>
-          </Li>
-          <Li>
-            <Link href="/login">로그인</Link>
-          </Li>
-          <Li>
-            <Link href="/register">회원가입</Link>
-          </Li>
-        </Ul3>
-      </Nav> */}
-
-      <form onSubmit={onSubmit}>
+      <Form onSubmit={onSubmit}>
         {/* <Wrapper> */}
-          <H2>회 원 가 입</H2>
-          <Label htmlFor="inputEmail">이메일</Label>
-          <Input
-            type="text"
-            id="inputEmail"
-            name="inputEmail"
-            style={{ fontSize: "25px", marginBottom: "0px" }}
-            onChange={handleState}
-            placeholder="이메일을 입력해주세요."
-          />
-          <div style={{ height: "40px" }}>
-            {
-              <div
-                style={
-                  isInputEmailValid === true || form.inputEmail.length == 0
-                    ? { display: "none" }
-                    : {
-                        display: "block",
-                        marginTop: "0px",
-                        width: "700px",
-                        textAlign: "left",
-                        fontFamily: "Inter",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                        fontSize: "25px",
-                        lineHeight: "24px",
-                        color: "red",
-                      }
-                }
-              >
-                이메일 형식이 맞지 않습니다.
-              </div>
-            }
-          </div>
-          <Label htmlFor="inputPw">비밀번호</Label>
-          <Input
-            type="text"
-            id="inputPw"
-            name="inputPw"
-            style={{ fontSize: "25px" }}
-            onChange={handleState}
-            placeholder="비밀번호를 입력해주세요."
-          />
-          <Label htmlFor="inputConfirmPw">비밀번호 재입력</Label>
-          <Input
-            type="text"
-            id="inputConfirmPw"
-            name="inputConfirmPw"
-            style={{ fontSize: "25px", marginBottom: "0px" }}
-            onChange={handleState}
-            placeholder="비밀번호를 재입력해주세요."
-          />
-          <div style={{ height: "40px" }}>
-            {
-              <div
-                style={
-                  isInputConfirmPwValid === true ||
-                  form.inputConfirmPw.length === 0
-                    ? { display: "none" }
-                    : {
-                        display: "block",
-                        marginTop: "0px",
-                        width: "700px",
-                        textAlign: "left",
-                        fontFamily: "Inter",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                        fontSize: "25px",
-                        lineHeight: "24px",
-                        color: "red",
-                      }
-                }
-              >
-                비밀번호가 일치하지 않습니다.
-              </div>
-            }
-          </div>
-          <Label htmlFor="inputName">이름</Label>
-          <Input
-            type="text"
-            id="inputName"
-            name="inputName"
-            style={{ fontSize: "25px", marginBottom: "0px" }}
-            onChange={handleState}
-            placeholder="이름을 입력해주세요."
-          />
-          <div style={{ height: "40px" }}>
-            {
-              <div
-                style={
-                  isInputNameValid === true || form.inputName.length == 0
-                    ? { display: "none" }
-                    : {
-                        display: "block",
-                        marginTop: "0px",
-                        width: "700px",
-                        textAlign: "left",
-                        fontFamily: "Inter",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                        fontSize: "25px",
-                        lineHeight: "24px",
-                        color: "red",
-                      }
-                }
-              >
-                이름 형식이 맞지 않습니다.
-              </div>
-            }
-          </div>
-          <Label htmlFor="inputPhoneNumber">핸드폰 번호</Label>
-          <Input
-            type="text"
-            id="inputPhoneNumber"
-            name="inputPhoneNumber"
-            style={{ fontSize: "25px", marginBottom: "0px" }}
-            onChange={handleState}
-            placeholder="핸드폰 번호를 입력해주세요."
-          />
-          <div style={{ height: "40px" }}>
-            {
-              <div
-                style={
-                  isInputPhoneNumberValid === true ||
-                  form.inputPhoneNumber.length == 0
-                    ? { display: "none" }
-                    : {
-                        display: "block",
-                        marginTop: "0px",
-                        width: "700px",
-                        textAlign: "left",
-                        fontFamily: "Inter",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                        fontSize: "25px",
-                        lineHeight: "24px",
-                        color: "red",
-                      }
-                }
-              >
-                핸드폰 번호 형식이 맞지 않습니다.
-              </div>
-            }
-          </div>
-          <Label htmlFor="selectedDistrict">주소</Label>
-          <Select
-            id="selectedDistrict"
-            name="selectedDistrict"
-            style={{ fontSize: "25px" }}
-            onChange={handleState}
-            placeholder="거주하는 지역구를 골라주세요."
-          >
-            {["강서구", "양천구", "강남구"].map((elem, i) => (
-              <option key={i}>{elem}</option>
-            ))}
-          </Select>
-          <Button style={{ marginTop: "40px" }} type="button" onClick={onSubmit}>
-            회 원 가 입
-          </Button>
+        <H2>회 원 가 입</H2>
+        <Label htmlFor="inputEmail">이메일</Label>
+        <Input
+          type="text"
+          id="inputEmail"
+          name="inputEmail"
+          style={{ fontSize: "25px", marginBottom: "0px" }}
+          onChange={handleState}
+          placeholder="이메일을 입력해주세요."
+        />
+        <div style={{ height: "40px" }}>
+          {
+            <div
+              style={
+                isInputEmailValid === true || form.inputEmail.length == 0
+                  ? { display: "none" }
+                  : {
+                      display: "block",
+                      marginTop: "0px",
+                      width: "700px",
+                      textAlign: "left",
+                      fontFamily: "Inter",
+                      fontStyle: "normal",
+                      fontWeight: 400,
+                      fontSize: "25px",
+                      lineHeight: "24px",
+                      color: "red",
+                    }
+              }
+            >
+              이메일 형식이 맞지 않습니다.
+            </div>
+          }
+        </div>
+        <Label htmlFor="inputPw">비밀번호</Label>
+        <Input
+          type="text"
+          id="inputPw"
+          name="inputPw"
+          style={{ fontSize: "25px" }}
+          onChange={handleState}
+          placeholder="비밀번호를 입력해주세요."
+        />
+        <Label htmlFor="inputConfirmPw">비밀번호 재입력</Label>
+        <Input
+          type="text"
+          id="inputConfirmPw"
+          name="inputConfirmPw"
+          style={{ fontSize: "25px", marginBottom: "0px" }}
+          onChange={handleState}
+          placeholder="비밀번호를 재입력해주세요."
+        />
+        <div style={{ height: "40px" }}>
+          {
+            <div
+              style={
+                isInputConfirmPwValid === true ||
+                form.inputConfirmPw.length === 0
+                  ? { display: "none" }
+                  : {
+                      display: "block",
+                      marginTop: "0px",
+                      width: "700px",
+                      textAlign: "left",
+                      fontFamily: "Inter",
+                      fontStyle: "normal",
+                      fontWeight: 400,
+                      fontSize: "25px",
+                      lineHeight: "24px",
+                      color: "red",
+                    }
+              }
+            >
+              비밀번호가 일치하지 않습니다.
+            </div>
+          }
+        </div>
+        <Label htmlFor="inputName">이름</Label>
+        <Input
+          type="text"
+          id="inputName"
+          name="inputName"
+          style={{ fontSize: "25px", marginBottom: "0px" }}
+          onChange={handleState}
+          placeholder="이름을 입력해주세요."
+        />
+        <div style={{ height: "40px" }}>
+          {
+            <div
+              style={
+                isInputNameValid === true || form.inputName.length == 0
+                  ? { display: "none" }
+                  : {
+                      display: "block",
+                      marginTop: "0px",
+                      width: "700px",
+                      textAlign: "left",
+                      fontFamily: "Inter",
+                      fontStyle: "normal",
+                      fontWeight: 400,
+                      fontSize: "25px",
+                      lineHeight: "24px",
+                      color: "red",
+                    }
+              }
+            >
+              이름 형식이 맞지 않습니다.
+            </div>
+          }
+        </div>
+        <Label htmlFor="inputPhoneNumber">핸드폰 번호</Label>
+        <Input
+          type="text"
+          id="inputPhoneNumber"
+          name="inputPhoneNumber"
+          style={{ fontSize: "25px", marginBottom: "0px" }}
+          onChange={handleState}
+          placeholder="핸드폰 번호를 입력해주세요."
+        />
+        <div style={{ height: "40px" }}>
+          {
+            <div
+              style={
+                isInputPhoneNumberValid === true ||
+                form.inputPhoneNumber.length == 0
+                  ? { display: "none" }
+                  : {
+                      display: "block",
+                      marginTop: "0px",
+                      width: "700px",
+                      textAlign: "left",
+                      fontFamily: "Inter",
+                      fontStyle: "normal",
+                      fontWeight: 400,
+                      fontSize: "25px",
+                      lineHeight: "24px",
+                      color: "red",
+                    }
+              }
+            >
+              핸드폰 번호 형식이 맞지 않습니다.
+            </div>
+          }
+        </div>
+        <Label htmlFor="selectedDistrict">주소</Label>
+        <Select
+          id="selectedDistrict"
+          name="selectedDistrict"
+          style={{ fontSize: "25px" }}
+          placeholder="거주하는 지역구를 골라주세요."
+          onChange={handleState}
+        >
+          {["강서구", "양천구", "강남구"].map((elem, i) => (
+            <option key={i} >{elem}</option>
+          ))}
+        </Select>
+        <Button style={{ marginTop: "40px" }} type="submit">
+          회 원 가 입
+        </Button>
         {/* </Wrapper> */}
-      </form>
+      </Form>
     </div>
   );
 };

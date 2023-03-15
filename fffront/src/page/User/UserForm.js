@@ -1,14 +1,14 @@
 /*eslint-disable*/
 import React, { useState, useEffect } from "react";
 import { usersApi, districtsApi } from "../../api/api";
-import { Wrapper, H2, Label, Input, Select, Button } from "./UserForm.styled";
+import { Form, H2, Label, Input, Select, Button } from "./UserForm.styled";
 import {
   removeToken,
   getToken,
   hasToken,
   getTokenHeader,
 } from "../../utils/tokenFunction";
-import { ROUTE } from "../../components/Routers/ROUTE"
+import { ROUTE } from "../../components/Routers/ROUTE";
 import LoginForm from "../Login/LoginForm";
 
 const UserForm = () => {
@@ -34,19 +34,19 @@ const UserForm = () => {
   // 1단계 : 유효성 검사(형식 체크)
   const validateInputEmail = (inputEmail) => {
     const emailRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/; // ! 유효성 검사 백엔드랑 상의하기
     return emailRegex.test(inputEmail);
   };
   const validateInputPw = (inputPw) => {
-    const pwRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{10,25}$/;
+    const pwRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{10,25}$/; // ! 유효성 검사 백엔드랑 상의하기
     return pwRegex.test(inputPw);
   };
   const validateInputName = (inputName) => {
-    const nameRegex = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
+    const nameRegex = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/; // ! 유효성 검사 백엔드랑 상의하기
     return nameRegex.test(inputName);
   };
   const validateInputPhoneNumber = (inputPhoneNumber) => {
-    const phoneNumberRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+    const phoneNumberRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/; // ! 유효성 검사 백엔드랑 상의하기
     return phoneNumberRegex.test(inputPhoneNumber);
   };
 
@@ -73,52 +73,21 @@ const UserForm = () => {
 
   // ~
   // post로 유저 데이터 변경
-  const onSubmit = () => {
+  const onSubmit = async () => {
     e.preventDefault();
-    if (isAllValid === true) {
-      usersApi.modify(form);
-    }
+    // ! isAllValid는 유효성 검사 확정후
+    // if (isAllValid === true) {
+    //    await usersApi.modify(form);
+    // }
+    await usersApi.modify(form);
   };
 
-  // 토큰 여부 검사사
-  if(ROUTE.USERFORM.withToken === false) return <LoginForm/>
+  // 토큰 여부 검사
+  ROUTE.USERFORM.withToken
 
   return (
     <div>
-      {/* <Nav>
-        <Ul1>
-          <LogoDiv>
-            <Link href="/">Logo</Link>
-          </LogoDiv>
-        </Ul1>
-        <Ul2>
-          <Li>
-            <Link href="/happiness">행복지수</Link>
-          </Li>
-          <Li>
-            <Link href="/environment">문화 환경 만족도</Link>
-          </Li>
-          <Li>
-            <Link href="/price">가격 비교</Link>
-          </Li>
-          <Li>
-            <Link href="/detail">아무개</Link>
-          </Li>
-        </Ul2>
-        <Ul3>
-          <Li>
-            <Link href="/mypage">마이페이지</Link>
-          </Li>
-          <Li>
-            <Link href="/login">로그인</Link>
-          </Li>
-          <Li>
-            <Link href="/register">회원가입</Link>
-          </Li>
-        </Ul3>
-      </Nav> */}
-
-      <Wrapper>
+      <Form onSubmit={onSubmit}>
         <H2>마이 페이지</H2>
         <Label htmlFor="inputEmail">이메일</Label>
         <Input
@@ -275,10 +244,10 @@ const UserForm = () => {
             <option key={i}>{elem}</option>
           ))}
         </Select>
-        <Button style={{ marginTop: "40px" }} type="button" onClick={onSubmit}>
+        <Button style={{ marginTop: "40px" }} type="submit">
           변 경 하 기
         </Button>
-      </Wrapper>
+      </Form>
     </div>
   );
 };

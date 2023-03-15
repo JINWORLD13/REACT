@@ -1,5 +1,4 @@
 /*eslint-disable*/
-import { useEffect } from "react";
 import Main from "./page/Main/Main";
 
 

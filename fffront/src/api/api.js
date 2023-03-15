@@ -11,13 +11,13 @@ export const api = axios.create({
   },
 });
 
-export const apiWithToken = (token) => {
+export const apiWithToken = (accessToken) => {
   return axios.create({
     baseURL: "http://localhost:8080",
     //쿼리로 넘길 키들을 headers 객체에 키밸류로 순서대로 넣어준다.
     headers: {
       "content-type": "application/json;charset=UTF-8",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${accessToken}`,
       accept: "application/json",
     },
   });
@@ -39,15 +39,8 @@ export const usersApi = {
       .catch((err) => alert("회원가입에 실패했습니다. 다시 시도해주세요."));
   },
   modify: async (form) => {
-    // interceptors 이용하는 방식 : header에 token이 필요한 api를 호출할 경우 자동으로 header에 값이 들어가게 된다.
-    // api.interceptors.request.use((config) => {
-    //   config.headers.common["Authorization"] = accessToken;
-    //   // !
-    //   // config.headers.common["Refresh-Token"] = refreshToken;
-    //   return config;
-    // });
     const token = getToken();
-    const instance = await apiWithToken(token);
+    const instance = await apiWithToken(token.accessToken);
     await instance
       .post("/user", {
         ...form,
@@ -62,7 +55,8 @@ export const usersApi = {
     await api
       .post("/login", {...form})
       .then((data) => {
-        setToken(data.token);
+        const token = {...data}
+        setToken(token); // access 및 refresh 동시에 obj(token)로 감싸여져 들어 있음.
         alert("로그인에 성공했습니다.");
       })
       .catch((err) => alert("로그인에 실패했습니다. 다시 시도해주세요."));

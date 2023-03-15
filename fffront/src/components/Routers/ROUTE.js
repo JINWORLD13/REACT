@@ -36,7 +36,7 @@ export const ROUTE = {
     path: "/UserForm",
     link: "/UserForm",
     element: UserForm,
-    withToken: hasToken()
+    withToken: ()=>{if(hasToken()===true){return <UserForm/>}else{<LoginForm/>}}
   },
 };
 

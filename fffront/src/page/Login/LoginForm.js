@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usersApi } from "../../api/api";
-import { Form, Wrapper, H2, Label, Input, Button } from "./LoginForm.styled";
+import { Form, H2, Label, Input, Button } from "./LoginForm.styled";
 
 function LoginForm() {
   // ~
@@ -26,11 +26,11 @@ function LoginForm() {
   // 유효성 검사(형식 체크)
   const validateInputEmail = (inputEmail) => {
     const emailRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ ;  // ! 유효성 검사 백엔드랑 상의하기
     return emailRegex.test(inputEmail);
   };
   const validateInputPw = (inputPw) => {
-    const pwRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{10,25}$/;
+    const pwRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm; // ! 유효성 검사 백엔드랑 상의하기
     return pwRegex.test(inputPw);
   };
 
@@ -43,79 +43,48 @@ function LoginForm() {
   // login 버튼 클릭 이벤트 (백에서 생성된 토큰을 프론트에서 로컬스토리지에 저장)
   const onSubmit = async (e) => {
     e.preventDefault(); // 리액트 다시 실행해도, 즉 다시 리렌더되어도 입력한 값, 변경해준 값들은 새로고침 안되도록 함.
-    const { inputEmail, inputPw } = form;
-    if (isAllValid === true) {
-      await usersApi.logIn({ inputEmail, inputPw });
-    }
+    // ! isAllValid는 유효성 검사 확정후
+    // if (isAllValid === true) {
+    //   await usersApi.logIn(form);
+    // }
+    await usersApi.logIn(form);
+    
   };
 
   return (
     <div>
-      {/* <Nav>
-        <Ul1>
-          <LogoDiv>
-            <Link href="/">Logo</Link>
-          </LogoDiv>
-        </Ul1>
-        <Ul2>
-          <Li>
-            <Link href="/happiness">행복지수</Link>
-          </Li>
-          <Li>
-            <Link href="/environment">문화 환경 만족도</Link>
-          </Li>
-          <Li>
-            <Link href="/price">가격 비교</Link>
-          </Li>
-          <Li>
-            <Link href="/detail">아무개</Link>
-          </Li>
-        </Ul2>
-        <Ul3>
-          <Li>
-            <Link href="/mypage">마이페이지</Link>
-          </Li>
-          <Li>
-            <Link href="/login">로그인</Link>
-          </Li>
-          <Li>
-            <Link href="/register">회원가입</Link>
-          </Li>
-        </Ul3>
-      </Nav> */}
-
-        <Form onSubmit={onSubmit}>
-          <H2>Far-Away Home</H2>
-          <Label htmlFor="inputEmail">이메일</Label>
-          <Input
-            type="email"
-            id="inputEmail"
-            name="inputEmail"
-            style={{ fontSize: "25px" }}
-            onChange={handleState}
-            placeholder="이메일을 입력해주세요."
-          />
-          <Label htmlFor="inputPw">비밀번호</Label>
-          <Input
-            type="password"
-            id="inputPw"
-            name="inputPw"
-            style={{ fontSize: "25px" }}
-            onChange={handleState}
-            placeholder="비밀번호를 입력해주세요."
-          />
-          <Button style={{ marginTop: "40px" }} type="submit">
-            로 그 인
-          </Button>
-          <Button
-            type="button"
-            onClick={() => {
-              navigate("/RegisterForm");
-            }}
-          >
-            회 원 가 입
-          </Button>
-        </Form>
+      <Form onSubmit={onSubmit}>
+        <H2>Far-Away Home</H2>
+        <Label htmlFor="inputEmail">이메일</Label>
+        <Input
+          type="email"
+          id="inputEmail"
+          name="inputEmail"
+          style={{ fontSize: "25px" }}
+          onChange={handleState}
+          placeholder="이메일을 입력해주세요."
+        />
+        <Label htmlFor="inputPw">비밀번호</Label>
+        <Input
+          type="password"
+          id="inputPw"
+          name="inputPw"
+          style={{ fontSize: "25px" }}
+          onChange={handleState}
+          placeholder="비밀번호를 입력해주세요."
+        />
+        <Button style={{ marginTop: "40px" }} type="submit">
+          로 그 인
+        </Button>
+        <Button
+          type="button"
+          onClick={() => {
+            navigate("/RegisterForm");
+          }}
+        >
+          회 원 가 입
+        </Button>
+      </Form>
     </div>
   );
 }
