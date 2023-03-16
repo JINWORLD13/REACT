@@ -15,18 +15,18 @@ const UserInfoForm = () => {
 
   if (hasAccessToken() === false) return <LoginForm from='UserInfoForm'/>;
 
-  // useEffect(async () => {
-  //   await userApi.getInfo
-  //     .then((data) => {
-  //       const { name , phoneNumber, address } = data.data.data.userInfo;
-  //       setForm({ name , phoneNumber, address });
-  //       alert("회원정보 가져오기에 성공했습니다.");
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //       alert("회원정보 가져오기에 실패했습니다.");
-  //     });
-  // }, []);
+  useEffect(async () => {
+    await userApi.getInfo
+      .then((data) => {
+        const { name , phoneNumber, address } = data.data.data.userInfo;
+        setForm({ name , phoneNumber, address });
+        alert("회원정보 가져오기에 성공했습니다.");
+      })
+      .catch((err) => {
+        console.log(err)
+        alert("회원정보 가져오기에 실패했습니다.");
+      });
+  }, []);
 
   return (
     <Form>

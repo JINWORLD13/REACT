@@ -3,7 +3,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userApi } from "../../api/api";
 import { Form, H2, Label, Input, Button } from "./LoginForm.styled";
-import { hasAccessToken } from "../../utils/tokenFunction";
+import {
+  hasAccessToken,
+  setAccessToken,
+  setRefreshToken,
+} from "../../utils/tokenFunction";
 import Home from "../Home";
 
 function LoginForm(props) {
@@ -27,25 +31,19 @@ function LoginForm(props) {
   // ~
   // login 버튼 클릭 이벤트 (백에서 생성된 토큰을 프론트에서 로컬스토리지에 저장)
   const onSubmit = async (e) => {
-    e.preventDefault(); // 이거 없애면 입력값이 전송되기 전 새로고침 됨.
-    await userApi.logIn(form);
-    // if (props.from === "/UserInfoForm") return navigate('/UserInfoForm')
-    navigate("/");
-    // switch (props.from) {
-    //   case "/UserChangeForm":
-    //     window.location.replace("/UserChangeForm");
-    //     break;
-    //   case "/UserWithdrawForm":
-    //     window.location.replace("/UserWithdrawForm");
-    //     break;
-    //   case "/UserInfoForm":
-    //     navigate("/UserInfoForm");
-    //     // 이게 실행이 안되는듯.
-    //     break;
-    //   default:
-    //     navigate("/");
-    // }
-    
+    e.preventDefault(); // 이거 없애면 입력값이 서버로 전송되기 전 새로고침 됨.
+    await userApi
+      .logIn(form)
+      .then((data) => {
+        const accessToken = data.data.data.accessToken;
+        const refreshToken = data.data.data.refreshToken;
+        setAccessToken(accessToken);
+        setRefreshToken(refreshToken);
+        alert("로그인에 성공했습니다.");
+        if (props.from === "/UserInfoForm") return navigate("/UserInfoForm");
+        navigate("/");
+      })
+      .catch((err) => alert("로그인에 실패했습니다. 다시 시도해주세요." + err));
   };
   if (hasAccessToken() === true) return <Home />;
   return (
@@ -54,7 +52,7 @@ function LoginForm(props) {
         <H2>Far-Away Home</H2>
         <Label htmlFor="inputEmail">이메일</Label>
         <Input
-          type="email"
+          type="text"
           id="inputEmail"
           name="inputEmail"
           style={{ fontSize: "25px" }}
@@ -63,7 +61,7 @@ function LoginForm(props) {
         />
         <Label htmlFor="inputPw">비밀번호</Label>
         <Input
-          type="password"
+          type="text"
           id="inputPw"
           name="inputPw"
           style={{ fontSize: "25px" }}

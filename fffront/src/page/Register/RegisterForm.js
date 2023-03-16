@@ -11,9 +11,11 @@ import {
 } from "./ReigsterForm.styled";
 import { hasAccessToken } from "../../utils/tokenFunction";
 import Home from "../Home";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
   if (hasAccessToken() === true) return <Home/>
+  const navigate = useNavigate();
   // ~
   const [form, setForm] = useState({
     inputEmail: "",
@@ -65,13 +67,7 @@ const RegisterForm = () => {
   const isInputPhoneNumberValid = validateInputPhoneNumber(
     form.inputPhoneNumber
   );
-  const isAllValid =
-    isInputEmailValid &&
-    isInputPwValid &&
-    isInputConfirmPwValid &&
-    isInputNameValid &&
-    isInputPhoneNumberValid;
-
+  
   // ~
   // post로 변경된 유저 데이터 등록
   const onSubmit = async (e) => {
@@ -87,7 +83,12 @@ const RegisterForm = () => {
     } else if (isInputPhoneNumberValid === false){
       alert('11자리의 숫자로 핸드폰 번호를 입력해주세요.')
     }
-    await userApi.signUp(form);
+    await userApi.signUp(form)
+      .then((data) => {
+        alert("회원가입 완료!");
+        navigate('/LoginForm');
+      })
+      .catch((err) => alert("회원가입에 실패했습니다. 다시 시도해주세요."));
   };
 
   return (
