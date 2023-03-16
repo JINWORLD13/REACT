@@ -29,8 +29,7 @@ const Header = () => {
               <NavLink onClick={()=>{
                 removeAccessToken();
                 removeRefreshToken();
-                navigate('/LoginForm');
-                }}>로그아웃</NavLink>
+                }} to="/">로그아웃</NavLink>
           </ButtonStyled>
         </NavStyled>
       </Container>

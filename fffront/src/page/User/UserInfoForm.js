@@ -13,7 +13,7 @@ const UserInfoForm = () => {
     address: "",
   });
 
-  if (hasAccessToken() === false) return <LoginForm />;
+  if (hasAccessToken() === false) return <LoginForm from='UserInfoForm'/>;
 
   // useEffect(async () => {
   //   await userApi.getInfo

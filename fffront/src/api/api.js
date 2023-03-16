@@ -1,5 +1,5 @@
 import axios from "axios";
-import { setAccessToken, setRefreshToken, getAccessToken, hasRefreshToken } from "../utils/tokenFunction";
+import { setAccessToken, setRefreshToken, getAccessToken } from "../utils/tokenFunction";
 
 // baseURL을 생성하면 api 호출시 공통되는 기본 URL을 반복해서 입력하지 않아도 된다.
 export const api = axios.create({
@@ -75,23 +75,17 @@ export const userApi = {
     await api
       .post("/login", {...form})
       .then((data) => {
-        if(hasRefreshToken() === false){
-          const accessToken = data.data.data.accessToken;
-          const refreshToken = data.data.data.refreshToken;
-          setAccessToken(accessToken);
-          setRefreshToken(refreshToken);
-        } else {
-          // ! 유효한 리프레쉬토큰 있을 경우 로직(액세스토큰 제거된 경우, 남아 있는데 만료된 경우)
-          const accessToken = data.data.data.accessToken;
-          setAccessToken(accessToken);
-        }
-        // ! 리프레쉬토큰 만료된 경우 로직
+        const accessToken = data.data.data.accessToken;
+        const refreshToken = data.data.data.refreshToken;
+        setAccessToken(accessToken);
+        setRefreshToken(refreshToken);
         alert("로그인에 성공했습니다.");
       })
       .catch((err) => alert("로그인에 실패했습니다. 다시 시도해주세요."));
   },
   getInfo: async () => {
-    await apiWithAccessToken
+    const accessToken = getAccessToken();
+    await apiWithAccessToken(accessToken)
       .get("/user") //! url
       
   },

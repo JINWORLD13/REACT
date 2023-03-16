@@ -8,9 +8,6 @@ import Home from "../Home";
 
 function LoginForm(props) {
   // ~
-
-  if (hasAccessToken() === true) return <Home/>
-
   const [form, setForm] = useState({
     inputEmail: "",
     inputPw: "",
@@ -30,12 +27,27 @@ function LoginForm(props) {
   // ~
   // login 버튼 클릭 이벤트 (백에서 생성된 토큰을 프론트에서 로컬스토리지에 저장)
   const onSubmit = async (e) => {
-    e.preventDefault(); // 리액트 다시 실행해도, 즉 다시 리렌더되어도 입력한 값, 변경해준 값들은 새로고침 안되도록 함.
+    e.preventDefault(); // 이거 없애면 입력값이 전송되기 전 새로고침 됨.
     await userApi.logIn(form);
-    if(props.from === '/UserForm' && hasAccessToken() === false) return navigate('/UserForm');
-    // await navigate('/') // ! 마이페이지 이동하는 기능(메인.js)과 충돌날 거 같음.
+    // if (props.from === "/UserInfoForm") return navigate('/UserInfoForm')
+    navigate("/");
+    // switch (props.from) {
+    //   case "/UserChangeForm":
+    //     window.location.replace("/UserChangeForm");
+    //     break;
+    //   case "/UserWithdrawForm":
+    //     window.location.replace("/UserWithdrawForm");
+    //     break;
+    //   case "/UserInfoForm":
+    //     navigate("/UserInfoForm");
+    //     // 이게 실행이 안되는듯.
+    //     break;
+    //   default:
+    //     navigate("/");
+    // }
+    
   };
-
+  if (hasAccessToken() === true) return <Home />;
   return (
     <div>
       <Form onSubmit={onSubmit}>

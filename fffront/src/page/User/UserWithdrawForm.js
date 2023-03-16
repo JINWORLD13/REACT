@@ -27,7 +27,7 @@ const UserWithdrawForm = () => {
     await userApi.withdraw(form.inputPw);
   };
 
-  if(hasAccessToken()===false) return <LoginForm/>
+  if(hasAccessToken()===false) return <LoginForm from='/UserWithdrawForm'/>
 
   return (
     <div>

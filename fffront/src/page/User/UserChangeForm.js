@@ -6,7 +6,7 @@ import { hasAccessToken } from "../../utils/tokenFunction";
 import LoginForm from "../Login/LoginForm";
 
 const UserChangeForm = () => {
-  if (hasAccessToken() === false) return <LoginForm />;
+  if (hasAccessToken() === false) return <LoginForm from='/UserChangeForm'/>;
   // ~
   const [form, setForm] = useState({
     inputEmail: "",
