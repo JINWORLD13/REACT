@@ -24,7 +24,12 @@ const UserWithdrawForm = () => {
   // post로 유저 데이터 변경
   const onSubmit = async () => {
     e.preventDefault();
-    await userApi.withdraw(form.inputPw);
+    if( form.inputPw === form.inputConfirmPw ){
+      await userApi.withdraw(form.inputPw);
+      alert('회원 탈퇴 성공')
+    }else{
+      alert('비밀번호가 일치하지 않습니다.')
+    }
   };
 
   if(hasAccessToken()===false) return <LoginForm from='/UserWithdrawForm'/>
@@ -52,7 +57,7 @@ const UserWithdrawForm = () => {
           placeholder="비밀번호를 재입력해주세요."
         />
         <Button style={{ marginTop: "40px" }} type="submit">
-          변 경 하 기
+          탈 퇴 하 기
         </Button>
       </Form>
     </div>

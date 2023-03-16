@@ -30,7 +30,7 @@ export const apiWithAccessToken = (accessToken, refreshToken) => {
 export const userApi = {
   signUp: async (form) => {
     // form은 obj여야 함.
-    await api.post("/register", {
+    return await api.post("/register", {
       ...form,
     });
   },
@@ -55,6 +55,7 @@ export const userApi = {
       .catch((err) => alert("정보 변경에 실패했습니다. 다시 시도해주세요."));
   },
   withdraw: async (inputPw) => {
+    await api.delete('/withdraw', {inputPw})
     const accessToken = getAccessToken();
     const refreshToken = getRefreshToken();
     await apiWithAccessToken(accessToken, refreshToken)
@@ -77,24 +78,10 @@ export const userApi = {
       );
   },
   logIn: async (form) => {
-    await api.post("/login", { ...form });
+    return await api.post("/login", { ...form });
   },
   getInfo: async () => {
-    const accessToken = getAccessToken();
-    const refreshToken = getRefreshToken();
-    await apiWithAccessToken(accessToken, refreshToken)
-      .get("/user")
-      .then(async (res) => {
-        if (res.data.data.newAccessToken?.length > 0) {
-          await apiWithAccessToken(
-            res.data.data.newAccess,
-            res.data.data.refreshToken
-          ).then((res) =>
-            alert("회원정보 불러오기 완료!(액세스토큰을 리프레쉬함.)")
-          );
-        }
-        alert("회원정보 불러오기 완료!");
-      });
+    return api.get('/user')
   },
 };
 
