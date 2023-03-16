@@ -1,14 +1,15 @@
 /*eslint-disable*/
-import React , { useLocation } from "react";
-import axios from "axios";
-import { NavLink } from "react-router-dom";
+import React from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 // 20220314 이효상 ROUTE import
 import { ROUTE, ROUTE_ARR } from "../../src/components/Routers/ROUTE";
+import { removeAccessToken, removeRefreshToken } from "../utils/tokenFunction";
 
 
 const Header = () => {
   ROUTE_ARR.find((el) => el.path === location.pathname);
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -22,7 +23,14 @@ const Header = () => {
               <NavLink to={ROUTE.CULTURAL_ENV.link}>문화 환경</NavLink>
               <NavLink to ={ROUTE.LOGINFORM.link}>로그인</NavLink>
               <NavLink to ={ROUTE.REGISTERFORM.link}>회원가입</NavLink>
-              <NavLink to ={ROUTE.USERFORM.link}>마이페이지</NavLink>
+              <NavLink to ={ROUTE.USERINFOFORM.link}>마이페이지(유저 정보)</NavLink>
+              <NavLink to ={ROUTE.USERCHANGEFORM.link}>마이페이지(유저 정보 변경)</NavLink>
+              <NavLink to ={ROUTE.USERWITHDRAWFORM.link}>마이페이지(회원 탈퇴)</NavLink>
+              <NavLink onClick={()=>{
+                removeAccessToken();
+                removeRefreshToken();
+                navigate('/LoginForm');
+                }}>로그아웃</NavLink>
           </ButtonStyled>
         </NavStyled>
       </Container>

@@ -1,13 +1,16 @@
 /*eslint-disable*/
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { usersApi } from "../../api/api";
-import Main from "../Main/Main";
+import { userApi } from "../../api/api";
 import { Form, H2, Label, Input, Button } from "./LoginForm.styled";
-import { ROUTE } from "../../components/Routers/ROUTE";
+import { hasAccessToken } from "../../utils/tokenFunction";
+import Home from "../Home";
 
-function LoginForm() {
+function LoginForm(props) {
   // ~
+
+  if (hasAccessToken() === true) return <Home/>
+
   const [form, setForm] = useState({
     inputEmail: "",
     inputPw: "",
@@ -28,7 +31,9 @@ function LoginForm() {
   // login 버튼 클릭 이벤트 (백에서 생성된 토큰을 프론트에서 로컬스토리지에 저장)
   const onSubmit = async (e) => {
     e.preventDefault(); // 리액트 다시 실행해도, 즉 다시 리렌더되어도 입력한 값, 변경해준 값들은 새로고침 안되도록 함.
-    await usersApi.logIn(form);
+    await userApi.logIn(form);
+    if(props.from === '/UserForm' && hasAccessToken() === false) return navigate('/UserForm');
+    // await navigate('/') // ! 마이페이지 이동하는 기능(메인.js)과 충돌날 거 같음.
   };
 
   return (

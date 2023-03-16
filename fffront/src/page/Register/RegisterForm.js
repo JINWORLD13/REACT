@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React, { useState, useEffect } from "react";
-import { districtsApi, usersApi } from "../../api/api";
+import { districtsApi, userApi } from "../../api/api";
 import {
   Form,
   H2,
@@ -9,8 +9,11 @@ import {
   Select,
   Button,
 } from "./ReigsterForm.styled";
+import { hasAccessToken } from "../../utils/tokenFunction";
+import Home from "../Home";
 
 const RegisterForm = () => {
+  if (hasAccessToken() === true) return <Home/>
   // ~
   const [form, setForm] = useState({
     inputEmail: "",
@@ -84,7 +87,7 @@ const RegisterForm = () => {
     } else if (isInputPhoneNumberValid === false){
       alert('11자리의 숫자로 핸드폰 번호를 입력해주세요.')
     }
-    await usersApi.signUp(form);
+    await userApi.signUp(form);
   };
 
   return (

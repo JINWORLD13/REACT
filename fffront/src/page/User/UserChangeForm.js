@@ -1,11 +1,12 @@
 /*eslint-disable*/
 import React, { useState, useEffect } from "react";
-import { usersApi, districtsApi } from "../../api/api";
-import { Form, H2, Label, Input, Select, Button } from "./UserForm.styled";
-import { ROUTE } from "../../components/Routers/ROUTE";
+import { userApi, districtsApi } from "../../api/api";
+import { Form, H2, Label, Input, Select, Button } from "./UserInfoForm.styled";
+import { hasAccessToken } from "../../utils/tokenFunction";
 import LoginForm from "../Login/LoginForm";
 
-const UserForm = () => {
+const UserChangeForm = () => {
+  if (hasAccessToken() === false) return <LoginForm />;
   // ~
   const [form, setForm] = useState({
     inputEmail: "",
@@ -59,17 +60,17 @@ const UserForm = () => {
     isInputPhoneNumberValid;
 
   // ! 지역구 이름 가져오기
-  let districts;
-  useEffect(() => {
-    districts = districtsApi.getData();
-  }, []);
+  // let districts;
+  // useEffect(() => {
+  //   districts = districtsApi.getData();
+  // }, []);
 
   // ~
   // post로 유저 데이터 변경
   const onSubmit = async () => {
     e.preventDefault();
     if (isAllValid === true) {
-      await usersApi.modify(form);
+      await userApi.modify(form);
     } else if (isInputEmailValid === false) {
       alert("올바른 이메일을 입력해주세요.");
     } else if (isInputPwValid === false) {
@@ -83,13 +84,10 @@ const UserForm = () => {
     }
   };
 
-  // 토큰 여부 검사
-  if (ROUTE.USERFORM.withToken === false) {return <LoginForm />};
-
   return (
     <div>
       <Form onSubmit={onSubmit}>
-        <H2>마이 페이지</H2>
+        <H2>마이 페이지(유저 정보 변경)</H2>
         <Label htmlFor="inputEmail">이메일</Label>
         <Input
           type="text"
@@ -245,4 +243,4 @@ const UserForm = () => {
   );
 };
 
-export default UserForm;
+export default UserChangeForm;
