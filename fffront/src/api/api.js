@@ -1,5 +1,13 @@
 import axios from "axios";
-import { getAccessToken, getRefreshToken } from "../utils/tokenFunction";
+import { get } from "mongoose";
+import {
+  getAccessToken,
+  getRefreshToken,
+  removeAccessToken,
+  removeRefreshToken,
+  setAccessToken,
+  setRefreshToken,
+} from "../utils/tokenFunction";
 
 // baseURL을 생성하면 api 호출시 공통되는 기본 URL을 반복해서 입력하지 않아도 된다.
 export const api = axios.create({
@@ -7,19 +15,18 @@ export const api = axios.create({
   //쿼리로 넘길 키들을 headers 객체에 키밸류로 순서대로 넣어준다.
   headers: {
     "content-type": "application/json;charset=UTF-8",
-    "accept": "application/json",
+    accept: "application/json",
   },
 });
 
-export const apiWithAccessToken = (accessToken, refreshToken) => {
+export const apiWithTokens = (accessToken, refreshToken) => {
   return axios.create({
     baseURL: "http://localhost:8080",
-    //쿼리로 넘길 키들을 headers 객체에 키밸류로 순서대로 넣어준다.
     headers: {
       "content-type": "application/json;charset=UTF-8",
-      "Authorization": `Bearer ${accessToken}`,
-      "Refresh": `${refreshToken}`,
-      "accept": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+      "Refresh-Token": `${refreshToken}`,
+      accept: "application/json",
     },
   });
 };
@@ -37,13 +44,13 @@ export const userApi = {
   modify: async (form) => {
     const accessToken = getAccessToken();
     const refreshToken = getRefreshToken();
-    await apiWithAccessToken(accessToken, refreshToken)
+    await apiWithTokens(accessToken, refreshToken)
       .put("/modify", {
         ...form,
       })
       .then(async (res) => {
         if (res.data.data.newAccessToken?.length > 0) {
-          await apiWithAccessToken(
+          await apiWithTokens(
             res.data.data.newAccess,
             res.data.data.refreshToken
           ).then((res) =>
@@ -55,33 +62,95 @@ export const userApi = {
       .catch((err) => alert("정보 변경에 실패했습니다. 다시 시도해주세요."));
   },
   withdraw: async (inputPw) => {
-    await api.delete('/withdraw', {inputPw})
     const accessToken = getAccessToken();
     const refreshToken = getRefreshToken();
-    await apiWithAccessToken(accessToken, refreshToken)
-      .delete("/withdraw", {
-        inputPw,
+    return await apiWithTokens(accessToken, refreshToken)
+      .delete(`/withdraw`, {
+        data: {
+          inputPw,
+        },
       })
       .then(async (res) => {
-        if (res.data.data.newAccessToken?.length > 0) {
-          await apiWithAccessToken(
-            res.data.data.newAccess,
+        if (
+          res?.data?.data?.newAccessToken != null ||
+          res?.data?.data?.newAccessToken != undefined
+        ) {
+          await apiWithTokens(
+            res.data.data.newAccessToken,
             res.data.data.refreshToken
-          ).then((res) =>
-            alert("회원정보 삭제 완료!(액세스토큰을 리프레쉬함.)")
-          );
+          ).then((res) => {
+            alert("회원정보 삭제 완료!(액세스토큰을 리프레쉬함.)");
+            removeAccessToken();
+            removeRefreshToken();
+            return "success";
+          });
         }
-        alert("회원정보 삭제 완료!");
+        if (res?.status === 204) {
+          alert("회원정보 삭제 완료!");
+          removeAccessToken();
+          removeRefreshToken();
+          return "success";
+        }
+        alert("회원정보 삭제에 실패했습니다. 다시 시도해주세요.");
       })
       .catch((err) =>
-        alert("회원정보 삭제에 실패했습니다. 다시 시도해주세요.")
+        alert("회원정보 삭제에 실패했습니다. 다시 시도해주세요." + err)
       );
   },
   logIn: async (form) => {
-    return await api.post("/login", { ...form });
+    return await api
+      .post("/login", { ...form })
+      .then((data) => {
+        const accessToken = data.data.data.accessToken;
+        const refreshToken = data.data.data.refreshToken;
+        setAccessToken(accessToken);
+        setRefreshToken(refreshToken);
+        alert("로그인에 성공했습니다.");
+        // if (props.from === "/UserInfoForm") return navigate("/UserInfoForm");
+        return "success";
+      })
+      .catch((err) => alert("로그인에 실패했습니다. 다시 시도해주세요."));
   },
   getInfo: async () => {
-    return api.get('/user')
+    const accessToken = getAccessToken();
+    const refreshToken = getRefreshToken();
+    return await apiWithTokens(accessToken, refreshToken)
+      .get("/user")
+      .then((data) => {
+        alert("회원정보 가져오기에 성공했습니다.1");
+        return  data.data.data.userInfo;
+      })
+      .catch((err) => {
+        alert("catch에서의 err" + err);
+        const accessToken = getAccessToken();
+        const refreshToken = getRefreshToken();
+        apiWithTokens(accessToken, refreshToken)
+          .get("/user")
+          .then((res) => {
+            alert("catch에서의 apiWithTokens의 res" + JSON.stringify(res));
+            if (
+              res?.data?.data?.newAccessToken !== null ||
+              res?.data?.data?.newAccessToken !== undefined
+            ) {
+              apiWithTokens(
+                res.data.data.newAccessToken,
+                res.data.data.refreshToken
+              ).then((res) => {
+                const { name, phoneNumber, address, role } =
+                  res?.data?.data?.userInfo ?? null;
+                alert(
+                  "회원정보 가져오기에 성공했습니다(액세스토큰을 리프레쉬함).2"
+                );
+                return { name, phoneNumber, address, role };
+              });
+            }
+            const { name, phoneNumber, address, role } =
+              res?.data?.data?.userInfo ?? null;
+            alert("회원정보 가져오기에 성공했습니다.3");
+            return { name, phoneNumber, address, role };
+          });
+        alert("회원정보 가져오기에 실패했습니다.");
+      });
   },
 };
 

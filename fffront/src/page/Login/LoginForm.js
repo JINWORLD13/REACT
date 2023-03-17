@@ -32,18 +32,14 @@ function LoginForm(props) {
   // login 버튼 클릭 이벤트 (백에서 생성된 토큰을 프론트에서 로컬스토리지에 저장)
   const onSubmit = async (e) => {
     e.preventDefault(); // 이거 없애면 입력값이 서버로 전송되기 전 새로고침 됨.
-    await userApi
-      .logIn(form)
-      .then((data) => {
-        const accessToken = data.data.data.accessToken;
-        const refreshToken = data.data.data.refreshToken;
-        setAccessToken(accessToken);
-        setRefreshToken(refreshToken);
-        alert("로그인에 성공했습니다.");
-        if (props.from === "/UserInfoForm") return navigate("/UserInfoForm");
-        navigate("/");
-      })
-      .catch((err) => alert("로그인에 실패했습니다. 다시 시도해주세요." + err));
+    const result = await userApi.logIn(form);
+    if (result === "success") {
+      if(props?.from !== null || props?.from !== undefined) {
+        location.reload();
+      }else{
+        navigate('/');
+      }
+    }
   };
   if (hasAccessToken() === true) return <Home />;
   return (
