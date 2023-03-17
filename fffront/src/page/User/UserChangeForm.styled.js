@@ -27,6 +27,18 @@ export const H2 = styled.h2`
 
   color: #000000;
 `;
+export const H3 = styled.h3`
+  text-align: center;
+  margin-bottom: 90px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 54px;
+
+  color: #000000;
+`;
 export const Label = styled.label`
   width: 700px;
   margin-bottom: 15px;

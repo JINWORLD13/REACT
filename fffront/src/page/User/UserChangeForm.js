@@ -1,17 +1,18 @@
 /*eslint-disable*/
 import React, { useState, useEffect } from "react";
-import { userApi, districtsApi } from "../../api/api";
-import { Form, H2, Label, Input, Select, Button } from "./UserInfoForm.styled";
+import { userApi } from "../../api/api";
+import { Form, H2, H3, Label, Input, Select, Button } from "./UserChangeForm.styled";
 import { hasAccessToken } from "../../utils/tokenFunction";
 import LoginForm from "../Login/LoginForm";
+import { useNavigate } from "react-router-dom";
 
 const UserChangeForm = () => {
-  if (hasAccessToken() === false) return <LoginForm from='/UserChangeForm'/>;
+  if (hasAccessToken() === false) return <LoginForm from="/UserChangeForm" />;
   // ~
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     inputEmail: "",
     inputPw: "",
-    inputConfirmPw: "",
     inputName: "",
     inputPhoneNumber: "",
     selectedDistrict: "",
@@ -47,17 +48,10 @@ const UserChangeForm = () => {
   // 2단계 : 유효성 검사 함수로 정리하기(true?)
   const isInputEmailValid = validateInputEmail(form.inputEmail);
   const isInputPwValid = validateInputPw(form.inputPw);
-  const isInputConfirmPwValid = form.inputPw === form.inputConfirmPw;
   const isInputNameValid = validateInputName(form.inputName);
   const isInputPhoneNumberValid = validateInputPhoneNumber(
     form.inputPhoneNumber
   );
-  const isAllValid =
-    isInputEmailValid &&
-    isInputPwValid &&
-    isInputConfirmPwValid &&
-    isInputNameValid &&
-    isInputPhoneNumberValid;
 
   // ! 지역구 이름 가져오기
   // let districts;
@@ -67,20 +61,23 @@ const UserChangeForm = () => {
 
   // ~
   // post로 유저 데이터 변경
-  const onSubmit = async () => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if (isAllValid === true) {
-      await userApi.modify(form);
-    } else if (isInputEmailValid === false) {
+    if (isInputEmailValid === false && form.inputEmail !== "") {
       alert("올바른 이메일을 입력해주세요.");
-    } else if (isInputPwValid === false) {
+    }
+    if (isInputPwValid === false && form.inputPw !== "") {
       alert("영문 대소문자, 숫자를 적어도 1개씩 포함 8자 이상 입력해주세요.");
-    } else if (isInputConfirmPwValid === false) {
-      alert("재확인 비밀번호를 알맞게 입력해주세요.");
-    } else if (isInputNameValid === false) {
+    }
+    if (isInputNameValid === false && form.inputName !== "") {
       alert("두 글자 이상의 한글로 이름을 입력해주세요.");
-    } else if (isInputPhoneNumberValid === false) {
+    }
+    if (isInputPhoneNumberValid === false && form.inputPhoneNumber !== "") {
       alert("11자리의 숫자로 핸드폰 번호를 입력해주세요.");
+    }
+    const result = await userApi.modify(form);
+    if (result === "success") {
+      navigate("/");
     }
   };
 
@@ -88,6 +85,7 @@ const UserChangeForm = () => {
     <div>
       <Form onSubmit={onSubmit}>
         <H2>마이 페이지(유저 정보 변경)</H2>
+        <H3>변경하실 정보만 입력바랍니다.</H3>
         <Label htmlFor="inputEmail">이메일</Label>
         <Input
           type="text"
@@ -228,7 +226,6 @@ const UserChangeForm = () => {
           style={{ fontSize: "25px" }}
           placeholder="거주하는 지역구를 골라주세요."
           onChange={handleState}
-          required
         >
           <option value="">선택해주세요</option>
           {["강서구", "양천구", "강남구"].map((elem, i) => (

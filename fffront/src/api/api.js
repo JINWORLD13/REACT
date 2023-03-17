@@ -36,29 +36,32 @@ export const apiWithTokens = (accessToken, refreshToken) => {
 export const userApi = {
   signUp: async (form) => {
     // form은 obj여야 함.
-    return await api.post("/register", {
-      ...form,
-    });
+    return await api
+      .post("/register", {
+        ...form,
+      })
+      .then((data) => {
+        alert("회원가입 완료!");
+        return "success";
+      })
+      .catch((err) => alert("회원가입에 실패했습니다. 다시 시도해주세요."));
   },
   modify: async (form) => {
     const accessToken = getAccessToken();
     const refreshToken = getRefreshToken();
-    await apiWithTokens(accessToken, refreshToken)
+    return await apiWithTokens(accessToken, refreshToken)
       .put("/modify", {
         ...form,
       })
-      .then(async (res) => {
-        if (res.data.data.newAccessToken?.length > 0) {
-          await apiWithTokens(
-            res.data.data.newAccess,
-            res.data.data.refreshToken
-          ).then((res) =>
-            alert("회원정보 수정 완료!(액세스토큰을 리프레쉬함.)")
-          );
-        }
+      .then((res) => {
+        alert(JSON.stringify(res));
+        setAccessToken(res.data.data.newAccessToken);
         alert("회원정보 수정 완료!");
+        return "success";
       })
-      .catch((err) => alert("정보 변경에 실패했습니다. 다시 시도해주세요."));
+      .catch((err) =>
+        alert("정보 변경에 실패했습니다. 다시 시도해주세요." + err)
+      );
   },
   withdraw: async (inputPw) => {
     const accessToken = getAccessToken();
@@ -74,6 +77,7 @@ export const userApi = {
           res?.data?.data?.newAccessToken !== null ||
           res?.data?.data?.newAccessToken !== undefined
         ) {
+          setAccessToken(res?.data?.data?.newAccessToken);
           await apiWithTokens(
             res.data.data.newAccessToken,
             res.data.data.refreshToken
@@ -116,7 +120,7 @@ export const userApi = {
     return await apiWithTokens(accessToken, refreshToken)
       .get("/user")
       .then((data) => {
-        return  data.data.data.userInfo;
+        return data.data.data.userInfo;
       })
       .catch((err) => {
         alert("catch에서의 err" + err);

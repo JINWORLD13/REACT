@@ -83,12 +83,10 @@ const RegisterForm = () => {
     } else if (isInputPhoneNumberValid === false){
       alert('11자리의 숫자로 핸드폰 번호를 입력해주세요.')
     }
-    await userApi.signUp(form)
-      .then((data) => {
-        alert("회원가입 완료!");
-        navigate('/LoginForm');
-      })
-      .catch((err) => alert("회원가입에 실패했습니다. 다시 시도해주세요."));
+    const result = await userApi.signUp(form);
+    if (result === "success"){
+      navigate('/LoginForm')
+    }      
   };
 
   return (
