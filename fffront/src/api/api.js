@@ -53,8 +53,15 @@ export const userApi = {
       .put("/modify", {
         ...form,
       })
-      .then((res) => {
-        alert(JSON.stringify(res));
+      .then(async (res) => {
+        const newAccessToken = res?.data?.data?.newAccessToken ?? null;
+        if (newAccessToken !== null) {
+          setAccessToken(newAccessToken);
+          await apiWithTokens(newAccessToken, refreshToken).then((res) => {
+            alert("회원정보 수정 완료!(액세스토큰을 리프레쉬함.)");
+            return "success";
+          });
+        }
         setAccessToken(res.data.data.newAccessToken);
         alert("회원정보 수정 완료!");
         return "success";
@@ -73,32 +80,25 @@ export const userApi = {
         },
       })
       .then(async (res) => {
-        if (
-          res?.data?.data?.newAccessToken !== null ||
-          res?.data?.data?.newAccessToken !== undefined
-        ) {
-          setAccessToken(res?.data?.data?.newAccessToken);
-          await apiWithTokens(
-            res.data.data.newAccessToken,
-            res.data.data.refreshToken
-          ).then((res) => {
-            alert("회원정보 삭제 완료!(액세스토큰을 리프레쉬함.)");
+        const newAccessToken = res?.data?.data?.newAccessToken ?? null;
+        if (newAccessToken !== null) {
+          setAccessToken(newAccessToken);
+          await apiWithTokens(newAccessToken, refreshToken).then((res) => {
+            alert("회원탈퇴 완료!(액세스토큰을 리프레쉬함.)");
             removeAccessToken();
             removeRefreshToken();
             return "success";
           });
         }
-        if (res?.status === 204) {
-          alert("회원정보 삭제 완료!");
+        if (res.status === 204) {
+          alert("회원탈퇴 완료!");
           removeAccessToken();
           removeRefreshToken();
           return "success";
         }
-        alert("회원정보 삭제에 실패했습니다. 다시 시도해주세요.");
+        alert("회원탈퇴에 실패했습니다.");
       })
-      .catch((err) =>
-        alert("회원정보 삭제에 실패했습니다. 다시 시도해주세요." + err)
-      );
+      .catch((err) => alert("회원탈퇴에 실패했습니다." + err));
   },
   logIn: async (form) => {
     return await api
@@ -119,39 +119,28 @@ export const userApi = {
     const refreshToken = getRefreshToken();
     return await apiWithTokens(accessToken, refreshToken)
       .get("/user")
-      .then((data) => {
-        return data.data.data.userInfo;
+      .then(async (res) => {
+        const statusCodeFirstDigit = parseInt(res.data.statusCode / 100);
+        if (statusCodeFirstDigit >= 4) {
+          alert("새로 로그인 하시기 바랍니다.");
+          return "fail";
+        }
+        const userInfo = res?.data?.data?.userInfo ?? null;
+        const newAccessToken = res?.data?.data?.newAccessToken ?? null;
+        if (newAccessToken !== null) {
+          setAccessToken(res?.data?.data?.newAccessToken);
+          await apiWithTokens(newAccessToken, refreshToken).then((res) => {
+            const userInfo = res.data.data.userInfo;
+            alert("회원정보 가져오기에 성공했습니다(액세스토큰을 리프레쉬함).");
+            return userInfo;
+          });
+        }
+
+        return userInfo;
       })
       .catch((err) => {
-        alert("catch에서의 err" + err);
-        const accessToken = getAccessToken();
-        const refreshToken = getRefreshToken();
-        apiWithTokens(accessToken, refreshToken)
-          .get("/user")
-          .then((res) => {
-            alert("catch에서의 apiWithTokens의 res" + JSON.stringify(res));
-            if (
-              res?.data?.data?.newAccessToken !== null ||
-              res?.data?.data?.newAccessToken !== undefined
-            ) {
-              apiWithTokens(
-                res.data.data.newAccessToken,
-                res.data.data.refreshToken
-              ).then((res) => {
-                const { name, phoneNumber, address, role } =
-                  res?.data?.data?.userInfo ?? null;
-                alert(
-                  "회원정보 가져오기에 성공했습니다(액세스토큰을 리프레쉬함).2"
-                );
-                return { name, phoneNumber, address, role };
-              });
-            }
-            const { name, phoneNumber, address, role } =
-              res?.data?.data?.userInfo ?? null;
-            alert("회원정보 가져오기에 성공했습니다.3");
-            return { name, phoneNumber, address, role };
-          });
-        alert("회원정보 가져오기에 실패했습니다.");
+        alert("회원정보 가져오기에 실패했습니다." + err);
+        return "fail";
       });
   },
 };

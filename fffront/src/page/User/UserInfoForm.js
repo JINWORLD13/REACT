@@ -4,9 +4,11 @@ import { userApi } from "../../api/api";
 import { Form, H2, Label, Div } from "./UserInfoForm.styled";
 import { hasAccessToken } from "../../utils/tokenFunction";
 import LoginForm from "../Login/LoginForm";
+import { useNavigate } from "react-router-dom";
 
 const UserInfoForm = () => {
   // ~
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
     phoneNumber: "",
@@ -19,7 +21,11 @@ const UserInfoForm = () => {
   useEffect(() => {
     async function fetchData() {
       const result = await userApi.getInfo();
-      setForm(result);
+      if (result === "fail"){
+        navigate('/');
+      }else{
+        setForm(result);
+      }
     }
     fetchData();
   }, []);
