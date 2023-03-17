@@ -1,5 +1,4 @@
 import axios from "axios";
-import { get } from "mongoose";
 import {
   getAccessToken,
   getRefreshToken,
@@ -72,8 +71,8 @@ export const userApi = {
       })
       .then(async (res) => {
         if (
-          res?.data?.data?.newAccessToken != null ||
-          res?.data?.data?.newAccessToken != undefined
+          res?.data?.data?.newAccessToken !== null ||
+          res?.data?.data?.newAccessToken !== undefined
         ) {
           await apiWithTokens(
             res.data.data.newAccessToken,
@@ -117,7 +116,6 @@ export const userApi = {
     return await apiWithTokens(accessToken, refreshToken)
       .get("/user")
       .then((data) => {
-        alert("회원정보 가져오기에 성공했습니다.1");
         return  data.data.data.userInfo;
       })
       .catch((err) => {

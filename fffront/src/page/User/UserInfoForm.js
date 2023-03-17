@@ -1,8 +1,8 @@
 /*eslint-disable*/
 import React, { useState, useEffect } from "react";
-import { userApi, apiWithTokens } from "../../api/api";
+import { userApi } from "../../api/api";
 import { Form, H2, Label, Div } from "./UserInfoForm.styled";
-import { hasAccessToken, getAccessToken, getRefreshToken } from "../../utils/tokenFunction";
+import { hasAccessToken } from "../../utils/tokenFunction";
 import LoginForm from "../Login/LoginForm";
 
 const UserInfoForm = () => {
@@ -14,17 +14,14 @@ const UserInfoForm = () => {
     role: "",
   });
 
-  if (hasAccessToken() === false) return <LoginForm from='UserInfoForm'/>;
+  if (hasAccessToken() === false) return <LoginForm from="UserInfoForm" />;
 
-  async function fetchData(){
-    const result = await userApi.getInfo()
-    return result
-  }
-  useEffect(async () => {
-    const result = await fetchData();
-    alert(JSON.stringify(result))
-    setForm(result); 
-      
+  useEffect(() => {
+    async function fetchData() {
+      const result = await userApi.getInfo();
+      setForm(result);
+    }
+    fetchData();
   }, []);
 
   return (

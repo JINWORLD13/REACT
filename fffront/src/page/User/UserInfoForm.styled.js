@@ -50,11 +50,14 @@ export const Input = styled.input`
   border: 1px solid #000000;
 `;
 export const Div = styled.div`
+  display: flex;
+  justify-content: left;
+  padding-top: 17px;
   box-sizing: border-box;
   margin-bottom: 40px;
   width: 700px;
   height: 80px;
-
+  font-size: 30px;
   background: #ffffff;
   border: 1px solid #000000;
 `;
