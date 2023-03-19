@@ -9,10 +9,9 @@ import { removeAccessToken, removeRefreshToken } from "../utils/tokenFunction";
 
 const Header = () => {
   ROUTE_ARR.find((el) => el.path === location.pathname);
-  const navigate = useNavigate();
 
   return (
-    <div>
+    <div style={{display:"block"}}>
       <Container>
         <LogoStyled>
         <NavLink to={ROUTE.HOME.link}><img className="Logo" src="./logo192.png" alt="임시로고" /></NavLink>
@@ -23,6 +22,7 @@ const Header = () => {
               <NavLink to={ROUTE.CULTURAL_ENV.link}>문화 환경</NavLink>
               <NavLink to ={ROUTE.LOGINFORM.link}>로그인</NavLink>
               <NavLink to ={ROUTE.REGISTERFORM.link}>회원가입</NavLink>
+              <NavLink to ={ROUTE.POSTFORM.link}>게시판</NavLink>
               <NavLink to ={ROUTE.USERINFOFORM.link}>마이페이지(유저 정보)</NavLink>
               <NavLink to ={ROUTE.USERCHANGEFORM.link}>마이페이지(유저 정보 변경)</NavLink>
               <NavLink to ={ROUTE.USERWITHDRAWFORM.link}>마이페이지(회원 탈퇴)</NavLink>

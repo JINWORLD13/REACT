@@ -3,6 +3,7 @@ import CulturalEnv from "../../components/classify/CulturalEnv";
 import Happiness from "../../components/classify/Happiness";
 import LoginForm from "../../page/Login/LoginForm";
 import RegisterForm from "../../page/Register/RegisterForm";
+import PostForm from "../../page/Post/PostForm";
 import UserChangeForm from "../../page/User/UserChangeForm";
 import UserWithdrawForm from "../../page/User/UserWithdrawForm";
 import UserInfoForm from "../../page/User/UserInfoForm";
@@ -43,6 +44,13 @@ export const ROUTE = {
     element: RegisterForm,
     withToken: hasAccessToken(),
     name:'회원가입'
+  },
+  POSTFORM: {
+    path: "/PostForm",
+    link: "/PostForm",
+    element: PostForm,
+    withToken: hasAccessToken(),
+    name:'게시판'
   },
   USERINFOFORM: {
     path: "/UserInfoForm",
